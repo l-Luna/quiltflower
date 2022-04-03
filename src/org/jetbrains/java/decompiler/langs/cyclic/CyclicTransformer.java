@@ -1,4 +1,4 @@
-package org.jetbrains.java.decompiler.ast.example;
+package org.jetbrains.java.decompiler.langs.cyclic;
 
 import org.jetbrains.java.decompiler.ast.AstNode;
 import org.jetbrains.java.decompiler.ast.LeafNode;
@@ -8,11 +8,12 @@ import java.util.function.Consumer;
 
 /**
  * Example transformer that converts decompiled Java to Cyclic.
- * <p/> Removes `throws` lists, `default` modifiers, and converts annotation definitions.
  */
 public class CyclicTransformer implements Consumer<AstNode> {
 
-  @Override
+  // TODO:
+  //  - convert annotation methods with bodies?
+  //  - convert enums and singles
   public void accept(AstNode astNode) {
     if (astNode.hasRole(JavaNodeRoles.THROWS_LIST)) {
       astNode.remove();

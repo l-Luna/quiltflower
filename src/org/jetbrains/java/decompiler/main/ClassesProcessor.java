@@ -477,7 +477,7 @@ public class ClassesProcessor implements CodeConstants {
         }
 
         TextBuffer classBuffer = new TextBuffer(AVERAGE_CLASS_SIZE);
-        new ClassWriter().classToJava(root, classBuffer, 0);
+        new ClassWriter().classToJava(root, classBuffer);
         classBuffer.reformat();
         classBuffer.getTracers().forEach((classAndMethod, tracer) -> {
           // get the class by name

@@ -1,9 +1,14 @@
-package org.jetbrains.java.decompiler.ast.java;
+package org.jetbrains.java.decompiler.langs.java;
 
 import org.jetbrains.java.decompiler.ast.AstNode;
 import org.jetbrains.java.decompiler.ast.CompoundNode;
 import org.jetbrains.java.decompiler.ast.LeafNode;
+import org.jetbrains.java.decompiler.ast.java.CommentNode;
+import org.jetbrains.java.decompiler.ast.java.ExprentNode;
+import org.jetbrains.java.decompiler.ast.java.JavaNodeRoles;
+import org.jetbrains.java.decompiler.ast.java.TypeNode;
 import org.jetbrains.java.decompiler.code.CodeConstants;
+import org.jetbrains.java.decompiler.langs.AstBuilder;
 import org.jetbrains.java.decompiler.main.ClassWriter;
 import org.jetbrains.java.decompiler.main.ClassesProcessor.ClassNode;
 import org.jetbrains.java.decompiler.main.DecompilerContext;
@@ -37,10 +42,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public final class JavaAstBuilder {
+public final class JavaAstBuilder implements AstBuilder {
 
   // Mirrors ClassWriter#classToJava
-  public static AstNode fromClass(ClassNode node) {
+  public AstNode build(ClassNode node) {
     ClassWrapper wrapper = node.getWrapper();
     StructClass cl = wrapper.getClassStruct();
     CompoundNode result = new CompoundNode(null);
@@ -178,7 +183,7 @@ public final class JavaAstBuilder {
 
   // TODO: make these return an AstNode instead of appending
   // TODO: better tree structure (preserve information better for transformations)
-  private static void appendModifiers(AstNode tree, int flags, int allowed, boolean isInterface, int excluded) {
+  private void appendModifiers(AstNode tree, int flags, int allowed, boolean isInterface, int excluded) {
     AstNode list = new CompoundNode(tree);
     list.setRole(JavaNodeRoles.MODIFIERS);
     flags &= allowed;
@@ -190,7 +195,7 @@ public final class JavaAstBuilder {
     }
   }
 
-  private static void appendTypeParameters(AstNode tree, List<String> parameters, List<List<VarType>> bounds) {
+  private void appendTypeParameters(AstNode tree, List<String> parameters, List<List<VarType>> bounds) {
     AstNode list = new CompoundNode(tree);
     appendLeaf(list, "<");
     for (int i = 0; i < parameters.size(); i++) {
@@ -214,7 +219,7 @@ public final class JavaAstBuilder {
     appendLeaf(list, ">");
   }
 
-  private static void appendRecordComponents(AstNode tree, StructClass cl, List<StructRecordComponent> components) {
+  private void appendRecordComponents(AstNode tree, StructClass cl, List<StructRecordComponent> components) {
     AstNode list = new CompoundNode(tree);
     list.setRole(JavaNodeRoles.RECORD_COMPONENTS);
     appendLeaf(list, "(");
@@ -229,7 +234,7 @@ public final class JavaAstBuilder {
     appendLeaf(list, ")");
   }
 
-  private static void appendRecordComponent(AstNode tree, StructRecordComponent cd, int i, boolean varArgComponent) {
+  private void appendRecordComponent(AstNode tree, StructRecordComponent cd, int i, boolean varArgComponent) {
     AstNode component = new CompoundNode(tree);
     VarType fieldType = new VarType(cd.getDescriptor(), false);
     GenericFieldDescriptor descriptor = cd.getSignature();
@@ -244,7 +249,7 @@ public final class JavaAstBuilder {
     appendLeaf(component, cd.getName());
   }
 
-  private static void appendFields(AstNode tree, StructClass cl, ClassWrapper wrapper, List<StructField> fields) {
+  private void appendFields(AstNode tree, StructClass cl, ClassWrapper wrapper, List<StructField> fields) {
     boolean enumFields = false, addedEnumSemicolon = false;
     List<StructRecordComponent> components = cl.getRecordComponents();
     AstNode fieldsList = new CompoundNode(tree);
@@ -281,7 +286,7 @@ public final class JavaAstBuilder {
     }
   }
 
-  private static void appendField(AstNode field, StructClass cl, ClassWrapper wrapper, StructField fd) {
+  private void appendField(AstNode field, StructClass cl, ClassWrapper wrapper, StructField fd) {
     boolean isInterface = cl.hasModifier(CodeConstants.ACC_INTERFACE);
     boolean isDeprecated = fd.hasAttribute(StructGeneralAttribute.ATTRIBUTE_DEPRECATED);
     boolean isEnum = fd.hasModifier(CodeConstants.ACC_ENUM) && DecompilerContext.getOption(IFernflowerPreferences.DECOMPILE_ENUM);
@@ -346,7 +351,7 @@ public final class JavaAstBuilder {
     }
   }
 
-  private static void appendMethods(AstNode tree, ClassNode node, StructClass cl, ClassWrapper wrapper, List<StructMethod> methods) {
+  private void appendMethods(AstNode tree, ClassNode node, StructClass cl, ClassWrapper wrapper, List<StructMethod> methods) {
     AstNode methodList = new CompoundNode(tree);
     for (int i = 0; i < methods.size(); i++) {
       StructMethod mt = methods.get(i);
@@ -364,7 +369,7 @@ public final class JavaAstBuilder {
     }
   }
 
-  private static AstNode fromMethod(ClassNode node, StructMethod mt, StructClass cl, ClassWrapper wrapper, int methodIndex) {
+  private AstNode fromMethod(ClassNode node, StructMethod mt, StructClass cl, ClassWrapper wrapper, int methodIndex) {
     // Get method by index, this keeps duplicate methods (with the same key) separate
     MethodWrapper methodWrapper = wrapper.getMethodWrapper(methodIndex);
     // Don't set the parent yet, that's done in appendMethods
@@ -615,7 +620,7 @@ public final class JavaAstBuilder {
     return hideMethod ? null : result;
   }
 
-  private static void appendInnerClasses(AstNode tree, ClassNode node, ClassWrapper wrapper) {
+  private void appendInnerClasses(AstNode tree, ClassNode node, ClassWrapper wrapper) {
     AstNode innerClassList = new CompoundNode(tree);
     for (ClassNode inner : node.nested) {
       if (inner.type == ClassNode.CLASS_MEMBER) {
@@ -625,7 +630,7 @@ public final class JavaAstBuilder {
           wrapper.getHiddenMembers().contains(innerCl.qualifiedName);
         if (hide) continue;
 
-        AstNode classNode = fromClass(inner);
+        AstNode classNode = build(inner);
         innerClassList.addChild(classNode);
       }
     }
