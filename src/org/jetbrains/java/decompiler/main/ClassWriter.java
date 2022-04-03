@@ -2,6 +2,8 @@
 package org.jetbrains.java.decompiler.main;
 
 import net.fabricmc.fernflower.api.IFabricJavadocProvider;
+import org.jetbrains.java.decompiler.ast.AstNode;
+import org.jetbrains.java.decompiler.ast.java.JavaAstBuilder;
 import org.jetbrains.java.decompiler.code.CodeConstants;
 import org.jetbrains.java.decompiler.code.Instruction;
 import org.jetbrains.java.decompiler.code.InstructionSequence;
@@ -258,6 +260,26 @@ public class ClassWriter {
   }
 
   public void classToJava(ClassNode node, TextBuffer buffer, int indent) {
+    ClassNode outerNode = (ClassNode) DecompilerContext.getProperty(DecompilerContext.CURRENT_CLASS_NODE);
+    DecompilerContext.setProperty(DecompilerContext.CURRENT_CLASS_NODE, node);
+
+    // last minute processing
+    boolean ok = invokeProcessors(buffer, node);
+
+    if (!ok) {
+      return;
+    }
+
+    ClassWrapper wrapper = node.getWrapper();
+    StructClass cl = wrapper.getClassStruct();
+
+    DecompilerContext.getLogger().startWriteClass(cl.qualifiedName);
+
+    AstNode astNode = JavaAstBuilder.fromClass(node);
+    buffer.append(astNode.text());
+  }
+
+  public void classToJavaOld(ClassNode node, TextBuffer buffer, int indent) {
     ClassNode outerNode = (ClassNode)DecompilerContext.getProperty(DecompilerContext.CURRENT_CLASS_NODE);
     DecompilerContext.setProperty(DecompilerContext.CURRENT_CLASS_NODE, node);
 
@@ -617,7 +639,7 @@ public class ClassWriter {
     buffer.append(" {").appendLineSeparator();
   }
 
-  private static boolean isSuperClassSealed(StructClass cl) {
+  public static boolean isSuperClassSealed(StructClass cl) {
     if (cl.superClass != null) {
       StructClass superClass = DecompilerContext.getStructContext().getClass((String) cl.superClass.value);
       if (superClass != null && superClass.hasAttribute(StructGeneralAttribute.ATTRIBUTE_PERMITTED_SUBCLASSES)) {
@@ -798,7 +820,7 @@ public class ClassWriter {
     }
   }
 
-  private static String toValidJavaIdentifier(String name) {
+  public static String toValidJavaIdentifier(String name) {
     if (name == null || name.isEmpty()) return name;
 
     boolean changed = false;
@@ -1111,7 +1133,7 @@ public class ClassWriter {
     return !hideMethod;
   }
 
-  private static void dumpError(TextBuffer buffer, MethodWrapper wrapper, int indent) {
+  public static void dumpError(TextBuffer buffer, MethodWrapper wrapper, int indent) {
     List<String> lines = new ArrayList<>();
     lines.add("$FF: Couldn't be decompiled");
     boolean exceptions = DecompilerContext.getOption(IFernflowerPreferences.DUMP_EXCEPTION_ON_ERROR);
@@ -1297,7 +1319,7 @@ public class ClassWriter {
     }
   }
 
-  private static boolean hideConstructor(ClassNode node, boolean init, boolean throwsExceptions, int paramCount, int methodAccessFlags) {
+  public static boolean hideConstructor(ClassNode node, boolean init, boolean throwsExceptions, int paramCount, int methodAccessFlags) {
     if (!init || throwsExceptions || paramCount > 0 || !DecompilerContext.getOption(IFernflowerPreferences.HIDE_DEFAULT_CONSTRUCTOR)) {
       return false;
     }
@@ -1325,14 +1347,14 @@ public class ClassWriter {
     return true;
   }
 
-  private static Map.Entry<VarType, GenericFieldDescriptor> getFieldTypeData(StructField fd) {
+  public static Map.Entry<VarType, GenericFieldDescriptor> getFieldTypeData(StructField fd) {
     VarType fieldType = new VarType(fd.getDescriptor(), false);
 
     GenericFieldDescriptor descriptor = fd.getSignature();
     return new AbstractMap.SimpleImmutableEntry<>(fieldType, descriptor);
   }
 
-  private static boolean containsDeprecatedAnnotation(StructMember mb) {
+  public static boolean containsDeprecatedAnnotation(StructMember mb) {
     for (StructGeneralAttribute.Key<?> key : ANNOTATION_ATTRIBUTES) {
       StructAnnotationAttribute attribute = (StructAnnotationAttribute) mb.getAttribute(key);
       if (attribute != null) {
@@ -1536,7 +1558,7 @@ public class ClassWriter {
     }
   }
 
-  private static final Map<Integer, String> MODIFIERS;
+  public static final Map<Integer, String> MODIFIERS;
   static {
     MODIFIERS = new LinkedHashMap<>();
     MODIFIERS.put(CodeConstants.ACC_PUBLIC, "public");
@@ -1552,22 +1574,22 @@ public class ClassWriter {
     MODIFIERS.put(CodeConstants.ACC_NATIVE, "native");
   }
 
-  private static final int CLASS_ALLOWED =
+  public static final int CLASS_ALLOWED =
     CodeConstants.ACC_PUBLIC | CodeConstants.ACC_PROTECTED | CodeConstants.ACC_PRIVATE | CodeConstants.ACC_ABSTRACT |
     CodeConstants.ACC_STATIC | CodeConstants.ACC_FINAL | CodeConstants.ACC_STRICT;
-  private static final int FIELD_ALLOWED =
+  public static final int FIELD_ALLOWED =
     CodeConstants.ACC_PUBLIC | CodeConstants.ACC_PROTECTED | CodeConstants.ACC_PRIVATE | CodeConstants.ACC_STATIC |
     CodeConstants.ACC_FINAL | CodeConstants.ACC_TRANSIENT | CodeConstants.ACC_VOLATILE;
-  private static final int METHOD_ALLOWED =
+  public static final int METHOD_ALLOWED =
     CodeConstants.ACC_PUBLIC | CodeConstants.ACC_PROTECTED | CodeConstants.ACC_PRIVATE | CodeConstants.ACC_ABSTRACT |
     CodeConstants.ACC_STATIC | CodeConstants.ACC_FINAL | CodeConstants.ACC_SYNCHRONIZED | CodeConstants.ACC_NATIVE |
     CodeConstants.ACC_STRICT;
 
-  private static final int CLASS_EXCLUDED = CodeConstants.ACC_ABSTRACT | CodeConstants.ACC_STATIC;
-  private static final int FIELD_EXCLUDED = CodeConstants.ACC_PUBLIC | CodeConstants.ACC_STATIC | CodeConstants.ACC_FINAL;
-  private static final int METHOD_EXCLUDED = CodeConstants.ACC_PUBLIC | CodeConstants.ACC_ABSTRACT;
+  public static final int CLASS_EXCLUDED = CodeConstants.ACC_ABSTRACT | CodeConstants.ACC_STATIC;
+  public static final int FIELD_EXCLUDED = CodeConstants.ACC_PUBLIC | CodeConstants.ACC_STATIC | CodeConstants.ACC_FINAL;
+  public static final int METHOD_EXCLUDED = CodeConstants.ACC_PUBLIC | CodeConstants.ACC_ABSTRACT;
 
-  private static final int ACCESSIBILITY_FLAGS = CodeConstants.ACC_PUBLIC | CodeConstants.ACC_PROTECTED | CodeConstants.ACC_PRIVATE;
+  public static final int ACCESSIBILITY_FLAGS = CodeConstants.ACC_PUBLIC | CodeConstants.ACC_PROTECTED | CodeConstants.ACC_PRIVATE;
 
   private static void appendModifiers(TextBuffer buffer, int flags, int allowed, boolean isInterface, int excluded) {
     flags &= allowed;

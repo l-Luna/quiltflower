@@ -114,7 +114,7 @@ public final class RecordHelper {
     return cl.getMethod(rc.getName(), "()" + rc.getDescriptor());
   }
 
-  private static boolean isVarArgRecord(StructClass cl) {
+  public static boolean isVarArgRecord(StructClass cl) {
     StructMethod init = getCanonicalConstructor(cl);
     return init != null && init.hasModifier(CodeConstants.ACC_VARARGS);
   }
