@@ -62,6 +62,15 @@ public final class DirectoryResultSaver implements IResultSaver {
 
   @Override
   public void saveClassFile(String path, String qualifiedName, String entryName, String content, int[] mapping) {
+    Path entryPath = this.root.resolve(entryName);
+
+    try (BufferedWriter writer = Files.newBufferedWriter(entryPath)) {
+      if (content != null) {
+        writer.write(content);
+      }
+    } catch (IOException e) {
+      throw new RuntimeException("Failed to save class", e);
+    }
   }
 
   @Override
