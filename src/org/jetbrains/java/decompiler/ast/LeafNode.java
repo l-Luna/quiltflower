@@ -6,12 +6,12 @@ import java.util.List;
 public class LeafNode implements AstNode {
 
   private AstNode parent;
-  private String text;
+  private String text, role;
 
   public LeafNode(AstNode parent, String text) {
     this.parent = parent;
     this.text = text;
-    if(parent != null) {
+    if (parent != null) {
       parent.addChild(this);
     }
   }
@@ -30,6 +30,14 @@ public class LeafNode implements AstNode {
 
   public String text() {
     return text;
+  }
+
+  public String role() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
   }
 
   public boolean requiresSpace() {

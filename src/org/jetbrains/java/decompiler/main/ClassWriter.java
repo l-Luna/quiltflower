@@ -3,6 +3,7 @@ package org.jetbrains.java.decompiler.main;
 
 import net.fabricmc.fernflower.api.IFabricJavadocProvider;
 import org.jetbrains.java.decompiler.ast.AstNode;
+import org.jetbrains.java.decompiler.ast.example.CyclicTransformer;
 import org.jetbrains.java.decompiler.ast.java.JavaAstBuilder;
 import org.jetbrains.java.decompiler.code.CodeConstants;
 import org.jetbrains.java.decompiler.code.Instruction;
@@ -276,6 +277,7 @@ public class ClassWriter {
     DecompilerContext.getLogger().startWriteClass(cl.qualifiedName);
 
     AstNode astNode = JavaAstBuilder.fromClass(node);
+    astNode.accept(new CyclicTransformer());
     buffer.append(astNode.text());
   }
 

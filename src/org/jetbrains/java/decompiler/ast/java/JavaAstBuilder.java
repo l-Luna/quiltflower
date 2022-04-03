@@ -91,12 +91,12 @@ public final class JavaAstBuilder {
     }
 
     if (isEnum) {
-      appendLeaf(result, "enum");
+      appendLeaf(result, "enum", JavaNodeRoles.CLASS_KIND);
     } else if (isInterface) {
-      if (isAnnotation) { // only add one node
-        appendLeaf(result, "@interface");
+      if (isAnnotation) {
+        appendLeaf(result, "@interface", JavaNodeRoles.CLASS_KIND);
       } else {
-        appendLeaf(result, "interface");
+        appendLeaf(result, "interface", JavaNodeRoles.CLASS_KIND);
       }
     } else if (isModuleInfo) {
       StructModuleAttribute moduleAttribute = cl.getAttribute(StructGeneralAttribute.ATTRIBUTE_MODULE);
@@ -105,12 +105,12 @@ public final class JavaAstBuilder {
         appendLeaf(modifiers, "open");
       }
 
-      appendLeaf(result, "module");
+      appendLeaf(result, "module", JavaNodeRoles.CLASS_KIND);
       appendLeaf(result, moduleAttribute.moduleName);
     } else if (components != null) {
-      appendLeaf(result, "record");
+      appendLeaf(result, "record", JavaNodeRoles.CLASS_KIND);
     } else {
-      appendLeaf(result, "class");
+      appendLeaf(result, "class", JavaNodeRoles.CLASS_KIND);
     }
     appendLeaf(result, node.simpleName);
 
@@ -167,19 +167,25 @@ public final class JavaAstBuilder {
     return result;
   }
 
-  private static void appendLeaf(AstNode tree, String text) {
-    new LeafNode(tree, text);
+  private static AstNode appendLeaf(AstNode tree, String text) {
+    return new LeafNode(tree, text);
+  }
+
+  private static void appendLeaf(AstNode tree, String text, String role) {
+    AstNode node = appendLeaf(tree, text);
+    node.setRole(role);
   }
 
   // TODO: make these return an AstNode instead of appending
   // TODO: better tree structure (preserve information better for transformations)
   private static void appendModifiers(AstNode tree, int flags, int allowed, boolean isInterface, int excluded) {
     AstNode list = new CompoundNode(tree);
+    list.setRole(JavaNodeRoles.MODIFIERS);
     flags &= allowed;
     if (!isInterface) excluded = 0;
     for (int modifier : ClassWriter.MODIFIERS.keySet()) {
       if ((flags & modifier) == modifier && (modifier & excluded) == 0) {
-        appendLeaf(list, ClassWriter.MODIFIERS.get(modifier));
+        appendLeaf(list, ClassWriter.MODIFIERS.get(modifier), JavaNodeRoles.MODIFIER);
       }
     }
   }
@@ -210,6 +216,7 @@ public final class JavaAstBuilder {
 
   private static void appendRecordComponents(AstNode tree, StructClass cl, List<StructRecordComponent> components) {
     AstNode list = new CompoundNode(tree);
+    list.setRole(JavaNodeRoles.RECORD_COMPONENTS);
     appendLeaf(list, "(");
     for (int i = 0; i < components.size(); i++) {
       StructRecordComponent cd = components.get(i);
@@ -253,6 +260,7 @@ public final class JavaAstBuilder {
         continue;
       }
       AstNode field = new CompoundNode(fieldsList);
+      field.setRole(JavaNodeRoles.FIELD);
 
       boolean isEnum = fd.hasModifier(CodeConstants.ACC_ENUM) && DecompilerContext.getOption(IFernflowerPreferences.DECOMPILE_ENUM);
       if (isEnum) {
@@ -350,6 +358,7 @@ public final class JavaAstBuilder {
 
       AstNode method = fromMethod(node, mt, cl, wrapper, i);
       if (method != null) {
+        method.setRole(JavaNodeRoles.METHOD);
         methodList.addChild(method);
       }
     }
@@ -479,8 +488,10 @@ public final class JavaAstBuilder {
         //    index++;
 
         AstNode parameterList = new CompoundNode(result);
+        parameterList.setRole(JavaNodeRoles.PARAMETER_LIST);
         for (int i = start; i < md.params.length; i++) {
           AstNode parameter = new CompoundNode(parameterList);
+          parameter.setRole(JavaNodeRoles.PARAMETER);
           VarType parameterType = hasDescriptor && paramCount < descriptor.parameterTypes.size() ? descriptor.parameterTypes.get(paramCount) : md.params[i];
           if (mask == null || mask.get(i) == null) {
             if (paramCount > 0) {
@@ -537,16 +548,17 @@ public final class JavaAstBuilder {
         StructExceptionsAttribute attr = mt.getAttribute(StructGeneralAttribute.ATTRIBUTE_EXCEPTIONS);
         if ((descriptor != null && !descriptor.exceptionTypes.isEmpty()) || attr != null) {
           throwsExceptions = true;
-          AstNode throwsClause = new CompoundNode(result);
-          appendLeaf(throwsClause, "throws");
+          AstNode throwsList = new CompoundNode(result);
+          throwsList.setRole(JavaNodeRoles.THROWS_LIST);
+          appendLeaf(throwsList, "throws");
 
           boolean useDescriptor = hasDescriptor && !descriptor.exceptionTypes.isEmpty();
           for (int i = 0; i < attr.getThrowsExceptions().size(); i++) {
             if (i > 0) {
-              appendLeaf(throwsClause, ", ");
+              appendLeaf(throwsList, ", ");
             }
             VarType type = useDescriptor ? descriptor.exceptionTypes.get(i) : new VarType(attr.getExcClassname(i, cl.getPool()), true);
-            new TypeNode(throwsClause, type);
+            new TypeNode(throwsList, type);
           }
         }
       }
@@ -555,8 +567,10 @@ public final class JavaAstBuilder {
         if (isAnnotation) {
           StructAnnDefaultAttribute attr = mt.getAttribute(StructGeneralAttribute.ATTRIBUTE_ANNOTATION_DEFAULT);
           if (attr != null) {
-            appendLeaf(result, "default");
-            new ExprentNode(result, attr.getDefaultValue());
+            AstNode defaultValue = new CompoundNode(result);
+            defaultValue.setRole(JavaNodeRoles.ANNOTATION_DEFAULT_VALUE);
+            appendLeaf(defaultValue, "default");
+            new ExprentNode(defaultValue, attr.getDefaultValue());
           }
         }
 

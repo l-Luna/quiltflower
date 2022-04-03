@@ -17,6 +17,10 @@ public interface AstNode {
 
   String text();
 
+  String role();
+
+  void setRole(String role);
+
   /**
    * Whether this node requires space according to language syntax, e.g. for keywords.
    * How much space is *actually* present depends on the formatter, but this guarantees at least one.
@@ -37,6 +41,13 @@ public interface AstNode {
     AstNode parent = parent();
     if (parent != null) {
       parent.replaceChild(this, with);
+    }
+  }
+
+  default void remove() {
+    AstNode parent = parent();
+    if (parent != null) {
+      parent.removeChild(this);
     }
   }
 
@@ -62,5 +73,9 @@ public interface AstNode {
 
   default AstNode lastChild() {
     return children().isEmpty() ? null : children().get(children().size() - 1);
+  }
+
+  default boolean hasRole(String role) {
+    return role() != null && role().equals(role);
   }
 }

@@ -8,10 +8,11 @@ public class CompoundNode implements AstNode {
 
   private final List<AstNode> nodes = new ArrayList<>();
   private AstNode parent;
+  private String role;
 
   public CompoundNode(AstNode parent) {
     this.parent = parent;
-    if(parent != null) {
+    if (parent != null) {
       parent.addChild(this);
     }
   }
@@ -28,7 +29,6 @@ public class CompoundNode implements AstNode {
     parent = newParent;
   }
 
-  @Override
   public String text() {
     StringBuilder acc = new StringBuilder();
     for (AstNode node : nodes) {
@@ -40,7 +40,14 @@ public class CompoundNode implements AstNode {
     return acc.toString();
   }
 
-  @Override
+  public String role() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
+  }
+
   public boolean requiresSpace() {
     return true;
   }
