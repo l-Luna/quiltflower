@@ -1,10 +1,14 @@
 package org.jetbrains.java.decompiler.langs.cyclic;
 
+import org.jetbrains.java.decompiler.langs.Languages;
 import org.jetbrains.java.decompiler.langs.java.JavaAstBuilder;
 import org.jetbrains.java.decompiler.langs.AstBuilder;
 import org.jetbrains.java.decompiler.langs.Language;
 import org.jetbrains.java.decompiler.main.ClassWriter;
 import org.jetbrains.java.decompiler.main.ClassesProcessor.ClassNode;
+
+import java.util.Collections;
+import java.util.List;
 
 public class CyclicLanguage implements Language {
 
@@ -15,6 +19,11 @@ public class CyclicLanguage implements Language {
   }
 
   public AstBuilder getBuilder() {
-    return new AstBuilder.WithTransformations(new JavaAstBuilder(), new CyclicTransformer());
+    return new AstBuilder.WithTransformations(new JavaAstBuilder(), this, new CyclicTransformer());
+  }
+
+  @Override
+  public List<Language> alsoUseContributorsFrom() {
+    return Collections.singletonList(Languages.JAVA_LANGUAGE);
   }
 }

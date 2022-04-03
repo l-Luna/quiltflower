@@ -9,6 +9,8 @@ import org.jetbrains.java.decompiler.ast.java.JavaNodeRoles;
 import org.jetbrains.java.decompiler.ast.java.TypeNode;
 import org.jetbrains.java.decompiler.code.CodeConstants;
 import org.jetbrains.java.decompiler.langs.AstBuilder;
+import org.jetbrains.java.decompiler.langs.Language;
+import org.jetbrains.java.decompiler.langs.Languages;
 import org.jetbrains.java.decompiler.main.ClassWriter;
 import org.jetbrains.java.decompiler.main.ClassesProcessor.ClassNode;
 import org.jetbrains.java.decompiler.main.DecompilerContext;
@@ -43,6 +45,11 @@ import java.util.List;
 import java.util.Map;
 
 public final class JavaAstBuilder implements AstBuilder {
+
+  @Override
+  public Language language() {
+    return Languages.JAVA_LANGUAGE;
+  }
 
   // Mirrors ClassWriter#classToJava
   public AstNode build(ClassNode node) {
@@ -163,8 +170,8 @@ public final class JavaAstBuilder implements AstBuilder {
 
     appendLeaf(result, "{");
 
-    appendFields(result, cl, wrapper, cl.getFields());
-    appendMethods(result, node, cl, wrapper, cl.getMethods());
+    appendFields(result, cl, node, cl.getFields());
+    appendMethods(result, node, cl, cl.getMethods());
     appendInnerClasses(result, node, wrapper);
 
     appendLeaf(result, "}");
@@ -249,15 +256,14 @@ public final class JavaAstBuilder implements AstBuilder {
     appendLeaf(component, cd.getName());
   }
 
-  private void appendFields(AstNode tree, StructClass cl, ClassWrapper wrapper, List<StructField> fields) {
+  private void appendFields(AstNode tree, StructClass cl, ClassNode node, List<StructField> fields) {
+    ClassWrapper wrapper = node.getWrapper();
     boolean enumFields = false, addedEnumSemicolon = false;
     List<StructRecordComponent> components = cl.getRecordComponents();
     AstNode fieldsList = new CompoundNode(tree);
 
     for (StructField fd : fields) {
-      boolean hide = fd.isSynthetic() && DecompilerContext.getOption(IFernflowerPreferences.REMOVE_SYNTHETIC) ||
-        wrapper.getHiddenMembers().contains(InterpreterUtil.makeUniqueKey(fd.getName(), fd.getDescriptor()));
-      if (hide) continue;
+      if (Languages.isFieldHidden(fd, node, language())) continue;
 
       if (components != null && fd.getAccessFlags() == (CodeConstants.ACC_FINAL | CodeConstants.ACC_PRIVATE) &&
         components.stream().anyMatch(c -> c.getName().equals(fd.getName()) && c.getDescriptor().equals(fd.getDescriptor()))) {
@@ -351,15 +357,13 @@ public final class JavaAstBuilder implements AstBuilder {
     }
   }
 
-  private void appendMethods(AstNode tree, ClassNode node, StructClass cl, ClassWrapper wrapper, List<StructMethod> methods) {
+  private void appendMethods(AstNode tree, ClassNode node, StructClass cl, List<StructMethod> methods) {
     AstNode methodList = new CompoundNode(tree);
+    ClassWrapper wrapper = node.getWrapper();
     for (int i = 0; i < methods.size(); i++) {
       StructMethod mt = methods.get(i);
 
-      boolean hide = mt.isSynthetic() && DecompilerContext.getOption(IFernflowerPreferences.REMOVE_SYNTHETIC) ||
-        mt.hasModifier(CodeConstants.ACC_BRIDGE) && DecompilerContext.getOption(IFernflowerPreferences.REMOVE_BRIDGE) ||
-        wrapper.getHiddenMembers().contains(InterpreterUtil.makeUniqueKey(mt.getName(), mt.getDescriptor()));
-      if (hide) continue;
+      if (Languages.isMethodHidden(mt, node, language())) continue;
 
       AstNode method = fromMethod(node, mt, cl, wrapper, i);
       if (method != null) {

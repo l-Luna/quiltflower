@@ -11,14 +11,18 @@ public interface AstBuilder {
 
   AstNode build(ClassNode node);
 
+  Language language();
+
   class WithTransformations implements AstBuilder {
 
     private final AstBuilder astBuilder;
     private final List<Consumer<AstNode>> transformations;
+    private final Language language;
 
     @SafeVarargs
-    public WithTransformations(AstBuilder astBuilder, Consumer<AstNode>... transformations) {
+    public WithTransformations(AstBuilder astBuilder, Language language, Consumer<AstNode>... transformations) {
       this.astBuilder = astBuilder;
+      this.language = language;
       this.transformations = Arrays.asList(transformations);
     }
 
@@ -28,6 +32,10 @@ public interface AstBuilder {
         astNode.accept(transformation);
       }
       return astNode;
+    }
+
+    public Language language() {
+      return language;
     }
   }
 }
