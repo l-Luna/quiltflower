@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CompoundNode extends AstNode {
+public class CompoundNode implements AstNode {
 
   private final List<AstNode> nodes = new ArrayList<>();
   private AstNode parent;

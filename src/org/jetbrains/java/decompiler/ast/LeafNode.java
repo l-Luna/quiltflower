@@ -3,7 +3,7 @@ package org.jetbrains.java.decompiler.ast;
 import java.util.Collections;
 import java.util.List;
 
-public class LeafNode extends AstNode {
+public class LeafNode implements AstNode {
 
   private AstNode parent;
   private String text;

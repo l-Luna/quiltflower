@@ -16,7 +16,6 @@ import org.jetbrains.java.decompiler.modules.decompiler.ExprProcessor;
 import org.jetbrains.java.decompiler.modules.decompiler.exps.ConstExprent;
 import org.jetbrains.java.decompiler.modules.decompiler.exps.Exprent;
 import org.jetbrains.java.decompiler.modules.decompiler.exps.NewExprent;
-import org.jetbrains.java.decompiler.modules.decompiler.exps.TypeAnnotation;
 import org.jetbrains.java.decompiler.modules.decompiler.stats.RootStatement;
 import org.jetbrains.java.decompiler.modules.decompiler.vars.VarTypeProcessor;
 import org.jetbrains.java.decompiler.modules.decompiler.vars.VarVersionPair;
@@ -173,6 +172,7 @@ public final class JavaAstBuilder {
   }
 
   // TODO: make these return an AstNode instead of appending
+  // TODO: better tree structure (preserve information better for transformations)
   private static void appendModifiers(AstNode tree, int flags, int allowed, boolean isInterface, int excluded) {
     AstNode list = new CompoundNode(tree);
     flags &= allowed;
@@ -590,7 +590,7 @@ public final class JavaAstBuilder {
         if (methodWrapper.decompileError != null) {
           TextBuffer buffer = new TextBuffer();
           ClassWriter.dumpError(buffer, methodWrapper, 0);
-          appendLeaf(result, "\n" + buffer.toString() + "\n");
+          appendLeaf(result, "\n" + buffer + "\n");
         }
         appendLeaf(result, "}");
       }
