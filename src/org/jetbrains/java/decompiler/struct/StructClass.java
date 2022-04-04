@@ -118,6 +118,7 @@ public class StructClass extends StructMember {
   private final VBStyleCollection<StructField, String> fields;
   private final VBStyleCollection<StructMethod, String> methods;
   private final GenericClassDescriptor signature;
+  private final List<Object> otherAttributes;
 
   private ConstantPool pool;
 
@@ -145,6 +146,7 @@ public class StructClass extends StructMember {
     this.fields = fields;
     this.methods = methods;
     this.signature = signature;
+    this.otherAttributes = new ArrayList<>();
   }
 
   public BytecodeVersion getVersion() {

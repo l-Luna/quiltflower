@@ -2,6 +2,8 @@ package org.jetbrains.java.decompiler.ast.java;
 
 public final class JavaNodeRoles {
 
+  public static final String CLASS = "class";
+
   public static final String CLASS_KIND = "class_kind";
 
   public static final String MODIFIERS = "modifiers";

@@ -8,10 +8,12 @@ import org.jetbrains.java.decompiler.main.ClassesProcessor.ClassNode;
 import org.jetbrains.java.decompiler.main.rels.MethodWrapper;
 import org.jetbrains.java.decompiler.struct.StructField;
 import org.jetbrains.java.decompiler.struct.StructMethod;
+import org.jetbrains.java.decompiler.struct.attr.StructGeneralAttribute;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public final class Languages {
 
@@ -69,5 +71,14 @@ public final class Languages {
     return contributorsFor(language).stream()
       .flatMap(x -> x.hiders().stream())
       .anyMatch(x -> x.isFieldHidden(field, in));
+  }
+
+  public static StructGeneralAttribute parse(String name, byte[] data) {
+    return Stream.concat(LANGUAGES.stream(), CONTRIBUTORS.stream())
+      .flatMap(x -> x.attributeParsers().stream())
+      .filter(x -> x.appliesTo(name))
+      .map(x -> x.parse(name, data))
+      .findFirst()
+      .orElse(null);
   }
 }

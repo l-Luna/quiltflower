@@ -10,4 +10,8 @@ public interface LanguageContributor {
   default List<MemberHider> hiders() {
     return Collections.emptyList();
   }
+
+  default List<AttributeParser<?>> attributeParsers() {
+    return Collections.emptyList();
+  }
 }

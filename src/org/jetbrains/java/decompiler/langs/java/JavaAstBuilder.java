@@ -3,10 +3,7 @@ package org.jetbrains.java.decompiler.langs.java;
 import org.jetbrains.java.decompiler.ast.AstNode;
 import org.jetbrains.java.decompiler.ast.CompoundNode;
 import org.jetbrains.java.decompiler.ast.LeafNode;
-import org.jetbrains.java.decompiler.ast.java.CommentNode;
-import org.jetbrains.java.decompiler.ast.java.ExprentNode;
-import org.jetbrains.java.decompiler.ast.java.JavaNodeRoles;
-import org.jetbrains.java.decompiler.ast.java.TypeNode;
+import org.jetbrains.java.decompiler.ast.java.*;
 import org.jetbrains.java.decompiler.code.CodeConstants;
 import org.jetbrains.java.decompiler.langs.AstBuilder;
 import org.jetbrains.java.decompiler.langs.Language;
@@ -55,7 +52,8 @@ public final class JavaAstBuilder implements AstBuilder {
   public AstNode build(ClassNode node) {
     ClassWrapper wrapper = node.getWrapper();
     StructClass cl = wrapper.getClassStruct();
-    CompoundNode result = new CompoundNode(null);
+    CompoundNode result = new ClassStructNode(null, node.classStruct);
+    result.setRole(JavaNodeRoles.CLASS);
 
     int flags = node.type == ClassNode.CLASS_ROOT ? cl.getAccessFlags() : node.access;
     boolean isDeprecated = cl.hasAttribute(StructGeneralAttribute.ATTRIBUTE_DEPRECATED);
