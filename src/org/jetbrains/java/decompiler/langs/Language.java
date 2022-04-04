@@ -11,6 +11,10 @@ public interface Language extends LanguageContributor {
 
   AstBuilder getBuilder();
 
+  String cmdName();
+
+  String fileExtension();
+
   default boolean contributeTo(Language language) {
     return language == this;
   }

@@ -28,6 +28,9 @@ public final class Languages {
   );
 
   public static Language languageFor(ClassNode clazz) {
+    if (clazz == null) {
+      return JAVA_LANGUAGE;
+    }
     for (Language language : LANGUAGES) {
       if (language.appliesTo(clazz)) {
         return language;

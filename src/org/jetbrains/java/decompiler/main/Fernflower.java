@@ -2,6 +2,8 @@
 package org.jetbrains.java.decompiler.main;
 
 import org.jetbrains.java.decompiler.ast.AstNode;
+import org.jetbrains.java.decompiler.langs.Language;
+import org.jetbrains.java.decompiler.langs.Languages;
 import org.jetbrains.java.decompiler.main.ClassesProcessor.ClassNode;
 import org.jetbrains.java.decompiler.main.extern.*;
 import org.jetbrains.java.decompiler.modules.renamer.ConverterHelper;
@@ -137,15 +139,16 @@ public class Fernflower implements IDecompiledData {
   @Override
   public String getClassEntryName(StructClass cl, String entryName) {
     ClassNode node = classProcessor.getMapRootClasses().get(cl.qualifiedName);
+    Language language = Languages.languageFor(node);
     if (node == null || node.type != ClassNode.CLASS_ROOT) {
       return null;
     }
     else if (converter != null) {
       String simpleClassName = cl.qualifiedName.substring(cl.qualifiedName.lastIndexOf('/') + 1);
-      return entryName.substring(0, entryName.lastIndexOf('/') + 1) + simpleClassName + ".java";
+      return entryName.substring(0, entryName.lastIndexOf('/') + 1) + simpleClassName + "." + language.fileExtension();
     }
     else {
-      return entryName.substring(0, entryName.lastIndexOf(".class")) + ".java";
+      return entryName.substring(0, entryName.lastIndexOf(".class")) + "." + language.fileExtension();
     }
   }
 

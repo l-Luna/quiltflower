@@ -23,6 +23,16 @@ public class CyclicLanguage implements Language {
   }
 
   @Override
+  public String cmdName() {
+    return "Cyclic";
+  }
+
+  @Override
+  public String fileExtension() {
+    return "cyc";
+  }
+
+  @Override
   public List<Language> alsoUseContributorsFrom() {
     return Collections.singletonList(Languages.JAVA_LANGUAGE);
   }

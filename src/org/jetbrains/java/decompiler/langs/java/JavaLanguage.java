@@ -19,6 +19,16 @@ public class JavaLanguage implements Language {
   }
 
   @Override
+  public String cmdName() {
+    return "java";
+  }
+
+  @Override
+  public String fileExtension() {
+    return "java";
+  }
+
+  @Override
   public List<MemberHider> hiders() {
     return Collections.singletonList(new JavaMemberHider());
   }
