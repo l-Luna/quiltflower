@@ -1,0 +1,299 @@
+import RecordPatterns.Circle;
+import RecordPatterns.Point;
+import RecordPatterns.Rectangle;
+import RecordPatterns.Shape;
+import RecordPatterns.Triangle;
+import java.io.PrintStream;
+import java.lang.runtime.SwitchBootstraps;
+
+public class RecordPatterns {
+   public static void main(String[] var0) {
+      Shape var1 = fromText(var0);// 17
+      PrintStream var10000 = System.out;
+      Shape var2 = var1;
+      byte var3 = 0;
+
+      while(true) {
+         Object var10001;
+         switch(SwitchBootstraps.typeSwitch<"typeSwitch",Triangle,Triangle,Rectangle,Circle,Circle>(var2, var3)) {
+            case -1:
+               var10001 = "null2";// 26
+               break;
+            case 0:
+               Point var15 = $proxy$a((Triangle)var2);
+               if (var15 != null) {
+                  int var18 = $proxy$x(var15);
+                  int var4 = Integer.valueOf(var18);// 19
+                  var18 = $proxy$y(var15);
+                  int var5 = Integer.valueOf(var18);
+                  var15 = $proxy$b((Triangle)var2);
+                  if (var15 != null) {
+                     var18 = $proxy$x(var15);
+                     int var7 = Integer.valueOf(var18);
+                     var18 = $proxy$y(var15);
+                     int var8 = Integer.valueOf(var18);
+                     var15 = $proxy$c((Triangle)var2);
+                     Triangle var10 = (Triangle)var2;
+                     if (var4 + var5 > 0) {
+                        var10001 = var10 + "";// 20
+                        break;
+                     }
+                  }
+               }
+
+               var3 = 1;
+               continue;
+            case 1:
+               Triangle var11 = (Triangle)var2;// 21
+               var10001 = var11;
+               break;
+            case 2:
+               Rectangle var12 = (Rectangle)var2;// 22
+               var10001 = var12;
+               break;
+            case 3:
+               Circle var13 = (Circle)var2;// 23
+               if (var13 == null) {
+                  var3 = 4;
+                  continue;
+               }
+
+               var10001 = var13;// 24
+               break;
+            case 4:
+               Circle var14 = (Circle)var2;// 25
+               var10001 = "null circle lol";
+               break;
+            default:
+               throw new MatchException(null, null);
+         }
+
+         var10000.println(var10001);// 18
+         return;// 28
+      }
+   }
+
+   public static Shape fromText(String[] var0) {
+      return null;// 31
+   }
+}
+
+class 'RecordPatterns' {
+   method 'main ([Ljava/lang/String;)V' {
+      0      10
+      1      10
+      2      10
+      3      10
+      4      10
+      5      11
+      6      11
+      7      11
+      8      12
+      9      12
+      a      13
+      b      13
+      c      17
+      d      17
+      e      17
+      f      17
+      10      17
+      11      17
+      12      17
+      13      17
+      3c      67
+      3d      67
+      41      67
+      42      22
+      43      22
+      44      22
+      45      22
+      46      22
+      47      22
+      48      22
+      49      22
+      4a      22
+      4b      23
+      4c      23
+      4d      23
+      50      24
+      51      24
+      52      24
+      53      24
+      54      24
+      55      24
+      56      24
+      57      25
+      58      25
+      59      25
+      5a      25
+      5b      25
+      5c      25
+      5d      25
+      5e      25
+      5f      25
+      60      25
+      61      26
+      62      26
+      63      26
+      64      26
+      65      26
+      66      26
+      67      26
+      68      27
+      69      27
+      6a      27
+      6b      27
+      6c      27
+      6d      27
+      6e      27
+      6f      27
+      70      27
+      71      27
+      76      28
+      77      28
+      78      28
+      79      28
+      7a      28
+      7b      28
+      7c      28
+      7d      28
+      7e      28
+      7f      29
+      80      29
+      81      29
+      84      30
+      85      30
+      86      30
+      87      30
+      88      30
+      89      30
+      8a      30
+      8b      31
+      8c      31
+      8d      31
+      8e      31
+      8f      31
+      90      31
+      91      31
+      92      31
+      93      31
+      94      31
+      95      32
+      96      32
+      97      32
+      98      32
+      99      32
+      9a      32
+      9b      32
+      9c      33
+      9d      33
+      9e      33
+      9f      33
+      a0      33
+      a1      33
+      a2      33
+      a3      33
+      a4      33
+      a5      33
+      a6      34
+      a7      34
+      a8      34
+      a9      34
+      aa      34
+      ab      34
+      ac      34
+      ad      34
+      ae      34
+      b3      35
+      b4      35
+      b5      35
+      b6      35
+      b7      35
+      b8      35
+      b9      36
+      ba      36
+      bb      36
+      bc      36
+      bd      36
+      be      36
+      c1      43
+      c2      43
+      c3      44
+      c6      37
+      c7      37
+      cb      37
+      cc      37
+      cd      37
+      ce      37
+      cf      37
+      d0      38
+      d3      46
+      d4      46
+      d5      46
+      d6      46
+      d7      46
+      d8      46
+      d9      47
+      da      47
+      db      48
+      de      50
+      df      50
+      e0      50
+      e1      50
+      e2      50
+      e3      50
+      e4      51
+      e5      51
+      e6      52
+      e9      54
+      ea      54
+      eb      54
+      ec      54
+      ed      54
+      ee      54
+      ef      55
+      f0      55
+      f1      55
+      f4      56
+      f5      56
+      f6      57
+      f9      60
+      fa      60
+      fb      61
+      fe      63
+      ff      63
+      100      63
+      101      63
+      102      63
+      103      63
+      104      64
+      105      64
+      106      65
+      109      19
+      10a      19
+      10b      20
+      10e      70
+      10f      70
+      110      70
+      111      71
+   }
+
+   method 'fromText ([Ljava/lang/String;)LRecordPatterns$Shape;' {
+      0      76
+      1      76
+   }
+}
+
+Lines mapping:
+17 <-> 11
+18 <-> 71
+19 <-> 26
+20 <-> 38
+21 <-> 47
+22 <-> 51
+23 <-> 55
+24 <-> 61
+25 <-> 64
+26 <-> 20
+28 <-> 72
+31 <-> 77

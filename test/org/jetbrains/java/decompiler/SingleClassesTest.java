@@ -616,6 +616,8 @@ public class SingleClassesTest extends SingleClassesTestBase {
     register(JAVA_17, "TestSealedRecord", "SealedInterface");
     // TODO: empty switch leaves behind a synthetic field access
     register(JAVA_8, "TestEnumSwitchEmpty");
+
+    registerRaw(CUSTOM, "RecordPatterns");
   }
 
   private void registerEntireClassPath() {
