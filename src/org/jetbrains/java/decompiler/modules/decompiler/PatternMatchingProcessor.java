@@ -128,6 +128,7 @@ public final class PatternMatchingProcessor {
       - `Top` is the top type of that kind (Object for all object components, int for all int components)
       - `$proxy$cN` is a generated wrapper method that wraps accessor calls in a try/catch for MatchExceptions
       - `safeCast` is a safe conversion for that kind (type pattern for objects, Integer.valueOf for int-likes...)
+      The same `top` variable is reused as much as possible.
     */
     Exprent condition = st.getHeadexprent().getCondition();
     if (condition instanceof FunctionExprent) {
