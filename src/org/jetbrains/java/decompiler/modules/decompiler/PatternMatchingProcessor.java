@@ -57,7 +57,7 @@ public final class PatternMatchingProcessor {
   public static Optional<PatternExprent> matchTypePattern(IfStatement st) {
     /*
      Follows the pattern:
-     if (it instanceof T) {
+     if (it instanceof T != false) {
        T t = (T)it;
        rest of code...
      }
@@ -116,12 +116,34 @@ public final class PatternMatchingProcessor {
   public static Optional<PatternExprent> matchRecordPattern(IfStatement st) {
     /*
      Follows the pattern:
-     if (it instanceof T) {
+     if (it instanceof T != false) {
        T t = (T)it; if named?
-       C1 var_ = $proxy$c1((T)? it); for every component
+       { // for every component
+         Top top = $proxy$cN((T)? it);
+         CN varN = safeCast(top);
+       }
        rest of code...
      }
+     Where:
+      - `Top` is the top type of that kind (Object for all object components, int for all int components)
+      - `$proxy$cN` is a generated wrapper method that wraps accessor calls in a try/catch for MatchExceptions
+      - `safeCast` is a safe conversion for that kind (type pattern for objects, Integer.valueOf for int-likes...)
     */
+    Exprent condition = st.getHeadexprent().getCondition();
+    if (condition instanceof FunctionExprent) {
+      FunctionExprent func = (FunctionExprent) condition;
+      if (func.getFuncType() == FunctionExprent.FunctionType.NE
+        && func.getLstOperands().get(0) instanceof FunctionExprent
+        && ((FunctionExprent) func.getLstOperands().get(0)).getFuncType() == FunctionExprent.FunctionType.INSTANCEOF) {
+        func = (FunctionExprent) func.getLstOperands().get(0);
+      }
+      if (func.getLstOperands().size() == 2 && func.getFuncType() == FunctionExprent.FunctionType.INSTANCEOF) {
+        Exprent source = func.getLstOperands().get(0);
+        Exprent target = func.getLstOperands().get(1);
+
+        // ...
+      }
+    }
     return Optional.empty();
   }
 }
