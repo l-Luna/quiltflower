@@ -14,7 +14,7 @@ import java.util.Optional;
 public final class PatternMatchingProcessor {
 
   public static boolean reduce(RootStatement root) {
-    boolean res = reduce(root, root);
+    boolean res = reduceRec(root);
 
     if (res) {
       SequenceHelper.condenseSequences(root);
@@ -23,10 +23,10 @@ public final class PatternMatchingProcessor {
     return res;
   }
 
-  private static boolean reduce(Statement statement, RootStatement root) {
+  private static boolean reduceRec(Statement statement) {
     boolean res = false;
     for (Statement stat : statement.getStats()) {
-      if (reduce(stat, root)) {
+      if (reduceRec(stat)) {
         res = true;
       }
     }

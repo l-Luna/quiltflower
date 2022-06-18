@@ -1,42 +1,37 @@
-import RecordPatterns.Circle;
-import RecordPatterns.Point;
-import RecordPatterns.Point3;
-import RecordPatterns.Rectangle;
-import RecordPatterns.S;
-import RecordPatterns.Shape;
-import RecordPatterns.Triangle;
 import java.io.PrintStream;
 import java.lang.runtime.SwitchBootstraps;
 import java.util.Arrays;
 
 public class RecordPatterns {
    public static void main(String[] var0) {
-      Shape var1 = fromText(var0);// 19
+      RecordPatterns.Shape var1 = fromText(var0);// 19
       PrintStream var10000 = System.out;
-      Shape var2 = var1;
+      RecordPatterns.Shape var2 = var1;
       int var3 = 0;
 
       while(true) {
          Object var10001;
-         switch(SwitchBootstraps.typeSwitch<"typeSwitch",Triangle,Triangle,Rectangle,Circle,Circle>(var2, var3)) {
+         switch(SwitchBootstraps.typeSwitch<"typeSwitch",RecordPatterns.Triangle,RecordPatterns.Triangle,RecordPatterns.Rectangle,RecordPatterns.Circle,RecordPatterns.Circle>(
+            var2, var3
+         )) {
             case -1:
                var10001 = "null2";
                break;
             case 0:
-               Point var33 = $proxy$a((Triangle)var2);
+               RecordPatterns.Point var33 = $proxy$a((RecordPatterns.Triangle)var2);
                if (var33 != null) {
                   int var36 = $proxy$x(var33);
                   int var4 = Integer.valueOf(var36);// 21
                   var36 = $proxy$y(var33);
                   int var5 = Integer.valueOf(var36);
-                  var33 = $proxy$b((Triangle)var2);
+                  var33 = $proxy$b((RecordPatterns.Triangle)var2);
                   if (var33 != null) {
                      var36 = $proxy$x(var33);
                      int var7 = Integer.valueOf(var36);
                      var36 = $proxy$y(var33);
                      int var8 = Integer.valueOf(var36);
-                     var33 = $proxy$c((Triangle)var2);
-                     Triangle var10 = (Triangle)var2;
+                     var33 = $proxy$c((RecordPatterns.Triangle)var2);
+                     RecordPatterns.Triangle var10 = (RecordPatterns.Triangle)var2;
                      if (var4 + var5 > 0) {
                         var10001 = var10 + "";// 22
                         break;
@@ -47,15 +42,15 @@ public class RecordPatterns {
                var3 = 1;
                continue;
             case 1:
-               Triangle var11 = (Triangle)var2;// 23
+               RecordPatterns.Triangle var11 = (RecordPatterns.Triangle)var2;// 23
                var10001 = var11;
                break;
             case 2:
-               Rectangle var12 = (Rectangle)var2;// 24
+               RecordPatterns.Rectangle var12 = (RecordPatterns.Rectangle)var2;// 24
                var10001 = var12;
                break;
             case 3:
-               Circle var13 = (Circle)var2;// 25
+               RecordPatterns.Circle var13 = (RecordPatterns.Circle)var2;// 25
                if (var13 == null) {
                   var3 = 4;
                   continue;
@@ -64,7 +59,7 @@ public class RecordPatterns {
                var10001 = var13;// 26
                break;
             case 4:
-               Circle var14 = (Circle)var2;// 27
+               RecordPatterns.Circle var14 = (RecordPatterns.Circle)var2;// 27
                var10001 = "null circle lol";
                break;
             default:
@@ -72,8 +67,8 @@ public class RecordPatterns {
          }
 
          var10000.println(var10001);// 20
-         Point3 var15 = fromTextP(var0);// 31
-         if (var15 instanceof Point3) {
+         RecordPatterns.Point3 var15 = fromTextP(var0);// 31
+         if (var15 instanceof RecordPatterns.Point3) {
             int var6 = $proxy$x(var15);// 28
             var3 = Integer.valueOf(var6);
             var6 = $proxy$y(var15);
@@ -83,7 +78,7 @@ public class RecordPatterns {
             System.out.println(var3 + var19 + var22);// 34
          }
 
-         if (var15 instanceof Point3) {
+         if (var15 instanceof RecordPatterns.Point3) {
             int var27 = $proxy$x(var15);// 33
             var3 = Integer.valueOf(var27);
             var27 = $proxy$y(var15);
@@ -95,8 +90,8 @@ public class RecordPatterns {
             }
          }
 
-         S var18 = fromTextS(var0);// 41
-         if (var18 instanceof S) {// 43
+         RecordPatterns.S var18 = fromTextS(var0);// 41
+         if (var18 instanceof RecordPatterns.S) {// 43
             Object var30 = $proxy$a(var18);// 37
             if (var30 instanceof Integer var21) {
                var30 = $proxy$b(var18);
@@ -111,439 +106,469 @@ public class RecordPatterns {
       }
    }
 
-   public static Shape fromText(String[] var0) {
+   public static RecordPatterns.Shape fromText(String[] var0) {
       return null;// 49
    }
 
-   public static Point3 fromTextP(String[] var0) {
+   public static RecordPatterns.Point3 fromTextP(String[] var0) {
       return null;// 53
    }
 
-   public static S fromTextS(String[] var0) {
+   public static RecordPatterns.S fromTextS(String[] var0) {
       return null;// 57
+   }
+
+   static record Circle(RecordPatterns.Point c, int r) implements RecordPatterns.Shape {
+   }
+
+   static enum Colour {
+      RED,
+      GREEN,
+      BLUE;
+   }
+
+   static record ColouredShape(RecordPatterns.Shape it, RecordPatterns.Colour c) {
+   }
+
+   static record Point(int x, int y) {
+   }
+
+   static record Point3(int x, int y, int z) {
+   }
+
+   static record Rectangle(RecordPatterns.Point a, RecordPatterns.Point b) implements RecordPatterns.Shape {
+   }
+
+   static record S<A, B, Xs>(A a, B b, Xs... xs) {
+   }
+
+   sealed interface Shape permits RecordPatterns.Triangle, RecordPatterns.Rectangle, RecordPatterns.Circle {
+   }
+
+   static record Triangle(RecordPatterns.Point a, RecordPatterns.Point b, RecordPatterns.Point c) implements RecordPatterns.Shape {
    }
 }
 
 class 'RecordPatterns' {
    method 'main ([Ljava/lang/String;)V' {
-      0      13
-      1      13
-      2      13
-      3      13
-      4      13
-      5      14
-      6      14
-      7      14
-      8      15
-      9      15
-      a      16
-      b      16
-      c      20
-      d      20
-      e      20
-      f      20
-      10      20
-      11      20
-      12      20
-      13      20
-      3c      70
-      3d      70
-      41      70
-      42      25
-      43      25
-      44      25
-      45      25
-      46      25
-      47      25
-      48      25
-      49      25
-      4a      25
-      4b      26
-      4c      26
-      4d      26
-      50      27
-      51      27
-      52      27
-      53      27
-      54      27
-      55      27
-      56      27
-      57      28
-      58      28
-      59      28
-      5a      28
-      5b      28
-      5c      28
-      5d      28
-      5e      28
-      5f      28
-      60      28
-      61      29
-      62      29
-      63      29
-      64      29
-      65      29
-      66      29
-      67      29
-      68      30
-      69      30
-      6a      30
-      6b      30
-      6c      30
-      6d      30
-      6e      30
-      6f      30
-      70      30
-      71      30
-      76      31
-      77      31
-      78      31
-      79      31
-      7a      31
-      7b      31
-      7c      31
-      7d      31
-      7e      31
-      7f      32
-      80      32
-      81      32
-      84      33
-      85      33
-      86      33
-      87      33
-      88      33
-      89      33
-      8a      33
-      8b      34
-      8c      34
-      8d      34
-      8e      34
-      8f      34
-      90      34
-      91      34
-      92      34
-      93      34
-      94      34
-      95      35
-      96      35
-      97      35
-      98      35
-      99      35
-      9a      35
-      9b      35
-      9c      36
-      9d      36
-      9e      36
-      9f      36
-      a0      36
-      a1      36
-      a2      36
-      a3      36
-      a4      36
-      a5      36
-      a6      37
-      a7      37
-      a8      37
-      a9      37
-      aa      37
-      ab      37
-      ac      37
-      ad      37
-      ae      37
-      b3      38
-      b4      38
-      b5      38
-      b6      38
-      b7      38
-      b8      38
-      b9      39
-      ba      39
-      bb      39
-      bc      39
-      bd      39
-      be      39
-      c1      46
-      c2      46
-      c3      47
-      c6      40
-      c7      40
-      cb      40
-      cc      40
-      cd      40
-      ce      40
-      cf      40
-      d0      41
-      d3      49
-      d4      49
-      d5      49
-      d6      49
-      d7      49
-      d8      49
-      d9      50
-      da      50
-      db      51
-      de      53
-      df      53
-      e0      53
-      e1      53
-      e2      53
-      e3      53
-      e4      54
-      e5      54
-      e6      55
-      e9      57
-      ea      57
-      eb      57
-      ec      57
-      ed      57
-      ee      57
-      ef      58
-      f0      58
-      f1      58
-      f4      59
-      f5      59
-      f6      60
-      f9      63
-      fa      63
-      fb      64
-      fe      66
-      ff      66
-      100      66
-      101      66
-      102      66
-      103      66
-      104      67
-      105      67
-      106      68
-      109      22
-      10a      22
-      10b      23
-      10e      73
-      10f      73
-      110      73
-      111      74
-      112      74
-      113      74
-      114      74
-      115      74
-      116      75
-      117      75
-      118      75
-      119      75
-      11a      75
-      11d      76
-      11e      76
-      11f      76
-      120      76
-      121      76
-      122      76
-      123      77
-      124      77
-      125      77
-      126      77
-      127      77
-      128      77
-      129      77
-      12a      77
-      12b      77
-      12c      78
-      12d      78
-      12e      78
-      12f      78
-      130      78
-      131      78
-      132      79
-      133      79
-      134      79
-      135      79
-      136      79
-      137      79
-      138      79
-      139      79
-      13a      79
-      13b      79
-      13c      80
-      13d      80
-      13e      80
-      13f      80
-      140      80
-      141      80
-      142      81
-      143      81
-      144      81
-      145      81
-      146      81
-      147      81
-      148      81
-      149      81
-      14a      81
-      14b      81
-      14c      82
-      14d      82
-      14e      82
-      14f      82
-      150      82
-      151      82
-      152      82
-      153      82
-      154      82
-      155      82
-      156      82
-      159      85
-      15a      85
-      15b      85
-      15c      85
-      15d      85
-      160      86
-      161      86
-      162      86
-      163      86
-      164      86
-      165      86
-      166      87
-      167      87
-      168      87
-      169      87
-      16a      87
-      16b      87
-      16c      87
-      16d      87
-      16e      87
-      16f      88
-      170      88
-      171      88
-      172      88
-      173      88
-      174      88
-      175      89
-      176      89
-      177      89
-      178      89
-      179      89
-      17a      89
-      17b      89
-      17c      89
-      17d      89
-      17e      89
-      17f      90
-      180      90
-      181      90
-      182      90
-      183      90
-      184      90
-      185      91
-      186      91
-      187      91
-      188      91
-      189      91
-      18a      91
-      18b      91
-      18c      91
-      18d      91
-      18e      91
-      192      92
-      193      92
-      196      92
-      197      92
-      198      92
-      199      92
-      19c      93
-      19d      93
-      19e      93
-      19f      93
-      1a0      93
-      1a1      93
-      1a4      97
-      1a5      97
-      1a6      97
-      1a7      97
-      1a8      97
-      1a9      98
-      1aa      98
-      1ab      98
-      1ac      98
-      1ad      98
-      1b0      99
-      1b1      99
-      1b2      99
-      1b3      99
-      1b4      99
-      1b5      99
-      1b6      100
-      1b7      100
-      1bb      100
-      1c5      101
-      1c6      101
-      1c7      101
-      1c8      101
-      1c9      101
-      1ca      101
-      1cb      102
-      1cc      102
-      1d0      102
-      1da      103
-      1db      103
-      1dc      103
-      1dd      103
-      1de      103
-      1df      103
-      1e0      104
-      1e1      104
-      1e4      104
-      1e5      104
-      1e6      104
-      1e7      104
-      1e8      104
-      1e9      104
-      1ea      104
-      1ed      104
-      1ee      104
-      1ef      104
-      1f0      104
-      1f1      104
-      1f2      104
-      1f3      104
-      1f4      104
-      1f5      104
-      1f8      109
+      0      6
+      1      6
+      2      6
+      3      6
+      4      6
+      5      7
+      6      7
+      7      7
+      8      8
+      9      8
+      a      9
+      b      9
+      c      14
+      d      14
+      e      13
+      f      13
+      10      13
+      11      13
+      12      13
+      13      13
+      3c      65
+      3d      65
+      41      65
+      42      20
+      43      20
+      44      20
+      45      20
+      46      20
+      47      20
+      48      20
+      49      20
+      4a      20
+      4b      21
+      4c      21
+      4d      21
+      50      22
+      51      22
+      52      22
+      53      22
+      54      22
+      55      22
+      56      22
+      57      23
+      58      23
+      59      23
+      5a      23
+      5b      23
+      5c      23
+      5d      23
+      5e      23
+      5f      23
+      60      23
+      61      24
+      62      24
+      63      24
+      64      24
+      65      24
+      66      24
+      67      24
+      68      25
+      69      25
+      6a      25
+      6b      25
+      6c      25
+      6d      25
+      6e      25
+      6f      25
+      70      25
+      71      25
+      76      26
+      77      26
+      78      26
+      79      26
+      7a      26
+      7b      26
+      7c      26
+      7d      26
+      7e      26
+      7f      27
+      80      27
+      81      27
+      84      28
+      85      28
+      86      28
+      87      28
+      88      28
+      89      28
+      8a      28
+      8b      29
+      8c      29
+      8d      29
+      8e      29
+      8f      29
+      90      29
+      91      29
+      92      29
+      93      29
+      94      29
+      95      30
+      96      30
+      97      30
+      98      30
+      99      30
+      9a      30
+      9b      30
+      9c      31
+      9d      31
+      9e      31
+      9f      31
+      a0      31
+      a1      31
+      a2      31
+      a3      31
+      a4      31
+      a5      31
+      a6      32
+      a7      32
+      a8      32
+      a9      32
+      aa      32
+      ab      32
+      ac      32
+      ad      32
+      ae      32
+      b3      33
+      b4      33
+      b5      33
+      b6      33
+      b7      33
+      b8      33
+      b9      34
+      ba      34
+      bb      34
+      bc      34
+      bd      34
+      be      34
+      c1      41
+      c2      41
+      c3      42
+      c6      35
+      c7      35
+      cb      35
+      cc      35
+      cd      35
+      ce      35
+      cf      35
+      d0      36
+      d3      44
+      d4      44
+      d5      44
+      d6      44
+      d7      44
+      d8      44
+      d9      45
+      da      45
+      db      46
+      de      48
+      df      48
+      e0      48
+      e1      48
+      e2      48
+      e3      48
+      e4      49
+      e5      49
+      e6      50
+      e9      52
+      ea      52
+      eb      52
+      ec      52
+      ed      52
+      ee      52
+      ef      53
+      f0      53
+      f1      53
+      f4      54
+      f5      54
+      f6      55
+      f9      58
+      fa      58
+      fb      59
+      fe      61
+      ff      61
+      100      61
+      101      61
+      102      61
+      103      61
+      104      62
+      105      62
+      106      63
+      109      17
+      10a      17
+      10b      18
+      10e      68
+      10f      68
+      110      68
+      111      69
+      112      69
+      113      69
+      114      69
+      115      69
+      116      70
+      117      70
+      118      70
+      119      70
+      11a      70
+      11d      71
+      11e      71
+      11f      71
+      120      71
+      121      71
+      122      71
+      123      72
+      124      72
+      125      72
+      126      72
+      127      72
+      128      72
+      129      72
+      12a      72
+      12b      72
+      12c      73
+      12d      73
+      12e      73
+      12f      73
+      130      73
+      131      73
+      132      74
+      133      74
+      134      74
+      135      74
+      136      74
+      137      74
+      138      74
+      139      74
+      13a      74
+      13b      74
+      13c      75
+      13d      75
+      13e      75
+      13f      75
+      140      75
+      141      75
+      142      76
+      143      76
+      144      76
+      145      76
+      146      76
+      147      76
+      148      76
+      149      76
+      14a      76
+      14b      76
+      14c      77
+      14d      77
+      14e      77
+      14f      77
+      150      77
+      151      77
+      152      77
+      153      77
+      154      77
+      155      77
+      156      77
+      159      80
+      15a      80
+      15b      80
+      15c      80
+      15d      80
+      160      81
+      161      81
+      162      81
+      163      81
+      164      81
+      165      81
+      166      82
+      167      82
+      168      82
+      169      82
+      16a      82
+      16b      82
+      16c      82
+      16d      82
+      16e      82
+      16f      83
+      170      83
+      171      83
+      172      83
+      173      83
+      174      83
+      175      84
+      176      84
+      177      84
+      178      84
+      179      84
+      17a      84
+      17b      84
+      17c      84
+      17d      84
+      17e      84
+      17f      85
+      180      85
+      181      85
+      182      85
+      183      85
+      184      85
+      185      86
+      186      86
+      187      86
+      188      86
+      189      86
+      18a      86
+      18b      86
+      18c      86
+      18d      86
+      18e      86
+      192      87
+      193      87
+      196      87
+      197      87
+      198      87
+      199      87
+      19c      88
+      19d      88
+      19e      88
+      19f      88
+      1a0      88
+      1a1      88
+      1a4      92
+      1a5      92
+      1a6      92
+      1a7      92
+      1a8      92
+      1a9      93
+      1aa      93
+      1ab      93
+      1ac      93
+      1ad      93
+      1b0      94
+      1b1      94
+      1b2      94
+      1b3      94
+      1b4      94
+      1b5      94
+      1b6      95
+      1b7      95
+      1bb      95
+      1c5      96
+      1c6      96
+      1c7      96
+      1c8      96
+      1c9      96
+      1ca      96
+      1cb      97
+      1cc      97
+      1d0      97
+      1da      98
+      1db      98
+      1dc      98
+      1dd      98
+      1de      98
+      1df      98
+      1e0      99
+      1e1      99
+      1e4      99
+      1e5      99
+      1e6      99
+      1e7      99
+      1e8      99
+      1e9      99
+      1ea      99
+      1ed      99
+      1ee      99
+      1ef      99
+      1f0      99
+      1f1      99
+      1f2      99
+      1f3      99
+      1f4      99
+      1f5      99
+      1f8      104
    }
 
    method 'fromText ([Ljava/lang/String;)LRecordPatterns$Shape;' {
-      0      114
-      1      114
+      0      109
+      1      109
    }
 
    method 'fromTextP ([Ljava/lang/String;)LRecordPatterns$Point3;' {
-      0      118
-      1      118
+      0      113
+      1      113
    }
 
    method 'fromTextS ([Ljava/lang/String;)LRecordPatterns$S;' {
-      0      122
-      1      122
+      0      117
+      1      117
    }
 }
 
 Lines mapping:
-19 <-> 14
-20 <-> 74
-21 <-> 29
-22 <-> 41
-23 <-> 50
-24 <-> 54
-25 <-> 58
-26 <-> 64
-27 <-> 67
-28 <-> 77
-31 <-> 75
-33 <-> 87
-34 <-> 83
-37 <-> 100
-38 <-> 94
-41 <-> 98
-43 <-> 99
-44 <-> 105
-46 <-> 110
-49 <-> 115
-53 <-> 119
-57 <-> 123
+19 <-> 7
+20 <-> 69
+21 <-> 24
+22 <-> 36
+23 <-> 45
+24 <-> 49
+25 <-> 53
+26 <-> 59
+27 <-> 62
+28 <-> 72
+31 <-> 70
+33 <-> 82
+34 <-> 78
+37 <-> 95
+38 <-> 89
+41 <-> 93
+43 <-> 94
+44 <-> 100
+46 <-> 105
+49 <-> 110
+53 <-> 114
+57 <-> 118
