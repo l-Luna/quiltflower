@@ -20,9 +20,11 @@ public abstract class PatternExprent extends Exprent {
   public static class TypePatternExprent extends PatternExprent {
 
     private final VarExprent var;
+    private final VarType type;
 
-    public TypePatternExprent(VarExprent var) {
+    public TypePatternExprent(VarExprent var, VarType type) {
       this.var = var;
+      this.type = type;
     }
 
     @Override
@@ -32,14 +34,14 @@ public abstract class PatternExprent extends Exprent {
 
     @Override
     public Exprent copy() {
-      return new TypePatternExprent(var);
+      return new TypePatternExprent(var, type);
     }
 
     @Override
     public TextBuffer toJava(int indent) {
       TextBuffer buffer = new TextBuffer();
-      //buffer.addBytecodeMapping(bytecode);
-      buffer.append(ExprProcessor.getCastTypeName(var.getVarType()));
+      //buffer.addBytecodeMapping(bytecode); // TODO
+      buffer.append(ExprProcessor.getCastTypeName(type));
       buffer.append(" ");
       buffer.append(var.getName());
       return buffer;

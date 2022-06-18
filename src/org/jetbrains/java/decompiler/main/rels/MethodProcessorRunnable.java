@@ -270,8 +270,8 @@ public class MethodProcessorRunnable implements Runnable {
 
       if (DecompilerContext.getOption(IFernflowerPreferences.PATTERN_MATCHING)) {
         if (cl.getVersion().hasIfPatternMatching()) {
-          if (IfPatternMatchProcessor.matchInstanceof(root)) {
-            decompileRecord.add("MatchIfInstanceof", root);
+          if (PatternMatchingProcessor.reduce(root)) {
+            decompileRecord.add("MatchPatterns", root);
             continue;
           }
         }
