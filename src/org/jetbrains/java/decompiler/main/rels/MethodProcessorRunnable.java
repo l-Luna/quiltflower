@@ -270,8 +270,8 @@ public class MethodProcessorRunnable implements Runnable {
 
       if (DecompilerContext.getOption(IFernflowerPreferences.PATTERN_MATCHING)) {
         if (cl.getVersion().hasIfPatternMatching()) {
-          if (PatternMatchingProcessor.reduce(root)) {
-            decompileRecord.add("MatchPatterns", root);
+          if (PatternMatchingProcessor.reduce(root, false)) {
+            decompileRecord.add("MatchTypePatterns", root);
             continue;
           }
         }
@@ -372,6 +372,10 @@ public class MethodProcessorRunnable implements Runnable {
 
     varProc.setVarDefinitions(root);
     decompileRecord.add("SetVarDefinitions", root);
+
+    while (PatternMatchingProcessor.reduce(root, true)) {
+      decompileRecord.add("MatchRecordPatterns", root);
+    } // must happen late to make sure that variables are merged across versions
 
     // Make sure to update assignments after setting the var definitions!
     if (SecondaryFunctionsHelper.updateAssignments(root)) {

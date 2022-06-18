@@ -80,7 +80,7 @@ public class RecordPatterns {
 
          if (var15 instanceof RecordPatterns.Point3) {
             int var27 = $proxy$x(var15);// 33
-            var3 = Integer.valueOf(var27);
+            var3 = Integer.valueOf(var27);// 37
             var27 = $proxy$y(var15);
             int var20 = Integer.valueOf(var27);
             var27 = $proxy$z(var15);
@@ -91,15 +91,8 @@ public class RecordPatterns {
          }
 
          RecordPatterns.S var18 = fromTextS(var0);// 41
-         if (var18 instanceof RecordPatterns.S) {// 43
-            Object var30 = $proxy$a(var18);// 37
-            if (var30 instanceof Integer var21) {
-               var30 = $proxy$b(var18);
-               if (var30 instanceof String var24) {
-                  var30 = $proxy$xs(var18);
-                  System.out.println("an S of " + var21 + " and " + var24 + " and " + Arrays.toString((Object[])var30));// 44
-               }
-            }
+         if (var18 instanceof RecordPatterns.S(Integer var21, String var24, Object var30)) {// 43
+            System.out.println("an S of " + var21 + " and " + var24 + " and " + Arrays.toString((Object[])var30));// 44
          }
 
          return;// 46
@@ -484,68 +477,41 @@ class 'RecordPatterns' {
       1a7      92
       1a8      92
       1a9      93
-      1aa      93
-      1ab      93
-      1ac      93
       1ad      93
-      1b0      94
-      1b1      94
-      1b2      94
-      1b3      94
-      1b4      94
-      1b5      94
-      1b6      95
-      1b7      95
-      1bb      95
-      1c5      96
-      1c6      96
-      1c7      96
-      1c8      96
-      1c9      96
-      1ca      96
-      1cb      97
-      1cc      97
-      1d0      97
-      1da      98
-      1db      98
-      1dc      98
-      1dd      98
-      1de      98
-      1df      98
-      1e0      99
-      1e1      99
-      1e4      99
-      1e5      99
-      1e6      99
-      1e7      99
-      1e8      99
-      1e9      99
-      1ea      99
-      1ed      99
-      1ee      99
-      1ef      99
-      1f0      99
-      1f1      99
-      1f2      99
-      1f3      99
-      1f4      99
-      1f5      99
-      1f8      104
+      1e0      94
+      1e1      94
+      1e4      94
+      1e5      94
+      1e6      94
+      1e7      94
+      1e8      94
+      1e9      94
+      1ea      94
+      1ed      94
+      1ee      94
+      1ef      94
+      1f0      94
+      1f1      94
+      1f2      94
+      1f3      94
+      1f4      94
+      1f5      94
+      1f8      97
    }
 
    method 'fromText ([Ljava/lang/String;)LRecordPatterns$Shape;' {
-      0      109
-      1      109
+      0      102
+      1      102
    }
 
    method 'fromTextP ([Ljava/lang/String;)LRecordPatterns$Point3;' {
-      0      113
-      1      113
+      0      106
+      1      106
    }
 
    method 'fromTextS ([Ljava/lang/String;)LRecordPatterns$S;' {
-      0      117
-      1      117
+      0      110
+      1      110
    }
 }
 
@@ -563,12 +529,12 @@ Lines mapping:
 31 <-> 70
 33 <-> 82
 34 <-> 78
-37 <-> 95
+37 <-> 83
 38 <-> 89
 41 <-> 93
 43 <-> 94
-44 <-> 100
-46 <-> 105
-49 <-> 110
-53 <-> 114
-57 <-> 118
+44 <-> 95
+46 <-> 98
+49 <-> 103
+53 <-> 107
+57 <-> 111
