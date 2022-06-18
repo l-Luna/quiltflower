@@ -1,41 +1,44 @@
 import RecordPatterns.Circle;
 import RecordPatterns.Point;
+import RecordPatterns.Point3;
 import RecordPatterns.Rectangle;
+import RecordPatterns.S;
 import RecordPatterns.Shape;
 import RecordPatterns.Triangle;
 import java.io.PrintStream;
 import java.lang.runtime.SwitchBootstraps;
+import java.util.Arrays;
 
 public class RecordPatterns {
    public static void main(String[] var0) {
-      Shape var1 = fromText(var0);// 17
+      Shape var1 = fromText(var0);// 19
       PrintStream var10000 = System.out;
       Shape var2 = var1;
-      byte var3 = 0;
+      int var3 = 0;
 
       while(true) {
          Object var10001;
          switch(SwitchBootstraps.typeSwitch<"typeSwitch",Triangle,Triangle,Rectangle,Circle,Circle>(var2, var3)) {
             case -1:
-               var10001 = "null2";// 26
+               var10001 = "null2";
                break;
             case 0:
-               Point var15 = $proxy$a((Triangle)var2);
-               if (var15 != null) {
-                  int var18 = $proxy$x(var15);
-                  int var4 = Integer.valueOf(var18);// 19
-                  var18 = $proxy$y(var15);
-                  int var5 = Integer.valueOf(var18);
-                  var15 = $proxy$b((Triangle)var2);
-                  if (var15 != null) {
-                     var18 = $proxy$x(var15);
-                     int var7 = Integer.valueOf(var18);
-                     var18 = $proxy$y(var15);
-                     int var8 = Integer.valueOf(var18);
-                     var15 = $proxy$c((Triangle)var2);
+               Point var33 = $proxy$a((Triangle)var2);
+               if (var33 != null) {
+                  int var36 = $proxy$x(var33);
+                  int var4 = Integer.valueOf(var36);// 21
+                  var36 = $proxy$y(var33);
+                  int var5 = Integer.valueOf(var36);
+                  var33 = $proxy$b((Triangle)var2);
+                  if (var33 != null) {
+                     var36 = $proxy$x(var33);
+                     int var7 = Integer.valueOf(var36);
+                     var36 = $proxy$y(var33);
+                     int var8 = Integer.valueOf(var36);
+                     var33 = $proxy$c((Triangle)var2);
                      Triangle var10 = (Triangle)var2;
                      if (var4 + var5 > 0) {
-                        var10001 = var10 + "";// 20
+                        var10001 = var10 + "";// 22
                         break;
                      }
                   }
@@ -44,256 +47,513 @@ public class RecordPatterns {
                var3 = 1;
                continue;
             case 1:
-               Triangle var11 = (Triangle)var2;// 21
+               Triangle var11 = (Triangle)var2;// 23
                var10001 = var11;
                break;
             case 2:
-               Rectangle var12 = (Rectangle)var2;// 22
+               Rectangle var12 = (Rectangle)var2;// 24
                var10001 = var12;
                break;
             case 3:
-               Circle var13 = (Circle)var2;// 23
+               Circle var13 = (Circle)var2;// 25
                if (var13 == null) {
                   var3 = 4;
                   continue;
                }
 
-               var10001 = var13;// 24
+               var10001 = var13;// 26
                break;
             case 4:
-               Circle var14 = (Circle)var2;// 25
+               Circle var14 = (Circle)var2;// 27
                var10001 = "null circle lol";
                break;
             default:
                throw new MatchException(null, null);
          }
 
-         var10000.println(var10001);// 18
-         return;// 28
+         var10000.println(var10001);// 20
+         Point3 var15 = fromTextP(var0);// 31
+         if (var15 instanceof Point3) {
+            int var6 = $proxy$x(var15);// 28
+            var3 = Integer.valueOf(var6);
+            var6 = $proxy$y(var15);
+            int var19 = Integer.valueOf(var6);
+            var6 = $proxy$z(var15);
+            int var22 = Integer.valueOf(var6);
+            System.out.println(var3 + var19 + var22);// 34
+         }
+
+         if (var15 instanceof Point3) {
+            int var27 = $proxy$x(var15);// 33
+            var3 = Integer.valueOf(var27);
+            var27 = $proxy$y(var15);
+            int var20 = Integer.valueOf(var27);
+            var27 = $proxy$z(var15);
+            int var23 = Integer.valueOf(var27);
+            if (var3 > 0 && var20 == 2) {
+               System.out.println(var23);// 38
+            }
+         }
+
+         S var18 = fromTextS(var0);// 41
+         if (var18 instanceof S) {// 43
+            Object var30 = $proxy$a(var18);// 37
+            if (var30 instanceof Integer var21) {
+               var30 = $proxy$b(var18);
+               if (var30 instanceof String var24) {
+                  var30 = $proxy$xs(var18);
+                  System.out.println("an S of " + var21 + " and " + var24 + " and " + Arrays.toString((Object[])var30));// 44
+               }
+            }
+         }
+
+         return;// 46
       }
    }
 
    public static Shape fromText(String[] var0) {
-      return null;// 31
+      return null;// 49
+   }
+
+   public static Point3 fromTextP(String[] var0) {
+      return null;// 53
+   }
+
+   public static S fromTextS(String[] var0) {
+      return null;// 57
    }
 }
 
 class 'RecordPatterns' {
    method 'main ([Ljava/lang/String;)V' {
-      0      10
-      1      10
-      2      10
-      3      10
-      4      10
-      5      11
-      6      11
-      7      11
-      8      12
-      9      12
-      a      13
-      b      13
-      c      17
-      d      17
-      e      17
-      f      17
-      10      17
-      11      17
-      12      17
-      13      17
-      3c      67
-      3d      67
-      41      67
-      42      22
-      43      22
-      44      22
-      45      22
-      46      22
-      47      22
-      48      22
-      49      22
-      4a      22
-      4b      23
-      4c      23
-      4d      23
-      50      24
-      51      24
-      52      24
-      53      24
-      54      24
-      55      24
-      56      24
-      57      25
-      58      25
-      59      25
-      5a      25
-      5b      25
-      5c      25
-      5d      25
-      5e      25
-      5f      25
-      60      25
-      61      26
-      62      26
-      63      26
-      64      26
-      65      26
-      66      26
-      67      26
-      68      27
-      69      27
-      6a      27
-      6b      27
-      6c      27
-      6d      27
-      6e      27
-      6f      27
-      70      27
-      71      27
-      76      28
-      77      28
-      78      28
-      79      28
-      7a      28
-      7b      28
-      7c      28
-      7d      28
-      7e      28
-      7f      29
-      80      29
-      81      29
-      84      30
-      85      30
-      86      30
-      87      30
-      88      30
-      89      30
-      8a      30
-      8b      31
-      8c      31
-      8d      31
-      8e      31
-      8f      31
-      90      31
-      91      31
-      92      31
-      93      31
-      94      31
-      95      32
-      96      32
-      97      32
-      98      32
-      99      32
-      9a      32
-      9b      32
-      9c      33
-      9d      33
-      9e      33
-      9f      33
-      a0      33
-      a1      33
-      a2      33
-      a3      33
-      a4      33
-      a5      33
-      a6      34
-      a7      34
-      a8      34
-      a9      34
-      aa      34
-      ab      34
-      ac      34
-      ad      34
-      ae      34
-      b3      35
-      b4      35
-      b5      35
-      b6      35
-      b7      35
-      b8      35
-      b9      36
-      ba      36
-      bb      36
-      bc      36
-      bd      36
-      be      36
-      c1      43
-      c2      43
-      c3      44
-      c6      37
-      c7      37
-      cb      37
-      cc      37
-      cd      37
-      ce      37
-      cf      37
-      d0      38
-      d3      46
-      d4      46
-      d5      46
-      d6      46
-      d7      46
-      d8      46
-      d9      47
-      da      47
-      db      48
-      de      50
-      df      50
-      e0      50
-      e1      50
-      e2      50
-      e3      50
-      e4      51
-      e5      51
-      e6      52
-      e9      54
-      ea      54
-      eb      54
-      ec      54
-      ed      54
-      ee      54
-      ef      55
-      f0      55
-      f1      55
-      f4      56
-      f5      56
-      f6      57
-      f9      60
-      fa      60
-      fb      61
-      fe      63
-      ff      63
-      100      63
-      101      63
-      102      63
-      103      63
-      104      64
-      105      64
-      106      65
-      109      19
-      10a      19
-      10b      20
-      10e      70
-      10f      70
-      110      70
-      111      71
+      0      13
+      1      13
+      2      13
+      3      13
+      4      13
+      5      14
+      6      14
+      7      14
+      8      15
+      9      15
+      a      16
+      b      16
+      c      20
+      d      20
+      e      20
+      f      20
+      10      20
+      11      20
+      12      20
+      13      20
+      3c      70
+      3d      70
+      41      70
+      42      25
+      43      25
+      44      25
+      45      25
+      46      25
+      47      25
+      48      25
+      49      25
+      4a      25
+      4b      26
+      4c      26
+      4d      26
+      50      27
+      51      27
+      52      27
+      53      27
+      54      27
+      55      27
+      56      27
+      57      28
+      58      28
+      59      28
+      5a      28
+      5b      28
+      5c      28
+      5d      28
+      5e      28
+      5f      28
+      60      28
+      61      29
+      62      29
+      63      29
+      64      29
+      65      29
+      66      29
+      67      29
+      68      30
+      69      30
+      6a      30
+      6b      30
+      6c      30
+      6d      30
+      6e      30
+      6f      30
+      70      30
+      71      30
+      76      31
+      77      31
+      78      31
+      79      31
+      7a      31
+      7b      31
+      7c      31
+      7d      31
+      7e      31
+      7f      32
+      80      32
+      81      32
+      84      33
+      85      33
+      86      33
+      87      33
+      88      33
+      89      33
+      8a      33
+      8b      34
+      8c      34
+      8d      34
+      8e      34
+      8f      34
+      90      34
+      91      34
+      92      34
+      93      34
+      94      34
+      95      35
+      96      35
+      97      35
+      98      35
+      99      35
+      9a      35
+      9b      35
+      9c      36
+      9d      36
+      9e      36
+      9f      36
+      a0      36
+      a1      36
+      a2      36
+      a3      36
+      a4      36
+      a5      36
+      a6      37
+      a7      37
+      a8      37
+      a9      37
+      aa      37
+      ab      37
+      ac      37
+      ad      37
+      ae      37
+      b3      38
+      b4      38
+      b5      38
+      b6      38
+      b7      38
+      b8      38
+      b9      39
+      ba      39
+      bb      39
+      bc      39
+      bd      39
+      be      39
+      c1      46
+      c2      46
+      c3      47
+      c6      40
+      c7      40
+      cb      40
+      cc      40
+      cd      40
+      ce      40
+      cf      40
+      d0      41
+      d3      49
+      d4      49
+      d5      49
+      d6      49
+      d7      49
+      d8      49
+      d9      50
+      da      50
+      db      51
+      de      53
+      df      53
+      e0      53
+      e1      53
+      e2      53
+      e3      53
+      e4      54
+      e5      54
+      e6      55
+      e9      57
+      ea      57
+      eb      57
+      ec      57
+      ed      57
+      ee      57
+      ef      58
+      f0      58
+      f1      58
+      f4      59
+      f5      59
+      f6      60
+      f9      63
+      fa      63
+      fb      64
+      fe      66
+      ff      66
+      100      66
+      101      66
+      102      66
+      103      66
+      104      67
+      105      67
+      106      68
+      109      22
+      10a      22
+      10b      23
+      10e      73
+      10f      73
+      110      73
+      111      74
+      112      74
+      113      74
+      114      74
+      115      74
+      116      75
+      117      75
+      118      75
+      119      75
+      11a      75
+      11d      76
+      11e      76
+      11f      76
+      120      76
+      121      76
+      122      76
+      123      77
+      124      77
+      125      77
+      126      77
+      127      77
+      128      77
+      129      77
+      12a      77
+      12b      77
+      12c      78
+      12d      78
+      12e      78
+      12f      78
+      130      78
+      131      78
+      132      79
+      133      79
+      134      79
+      135      79
+      136      79
+      137      79
+      138      79
+      139      79
+      13a      79
+      13b      79
+      13c      80
+      13d      80
+      13e      80
+      13f      80
+      140      80
+      141      80
+      142      81
+      143      81
+      144      81
+      145      81
+      146      81
+      147      81
+      148      81
+      149      81
+      14a      81
+      14b      81
+      14c      82
+      14d      82
+      14e      82
+      14f      82
+      150      82
+      151      82
+      152      82
+      153      82
+      154      82
+      155      82
+      156      82
+      159      85
+      15a      85
+      15b      85
+      15c      85
+      15d      85
+      160      86
+      161      86
+      162      86
+      163      86
+      164      86
+      165      86
+      166      87
+      167      87
+      168      87
+      169      87
+      16a      87
+      16b      87
+      16c      87
+      16d      87
+      16e      87
+      16f      88
+      170      88
+      171      88
+      172      88
+      173      88
+      174      88
+      175      89
+      176      89
+      177      89
+      178      89
+      179      89
+      17a      89
+      17b      89
+      17c      89
+      17d      89
+      17e      89
+      17f      90
+      180      90
+      181      90
+      182      90
+      183      90
+      184      90
+      185      91
+      186      91
+      187      91
+      188      91
+      189      91
+      18a      91
+      18b      91
+      18c      91
+      18d      91
+      18e      91
+      192      92
+      193      92
+      196      92
+      197      92
+      198      92
+      199      92
+      19c      93
+      19d      93
+      19e      93
+      19f      93
+      1a0      93
+      1a1      93
+      1a4      97
+      1a5      97
+      1a6      97
+      1a7      97
+      1a8      97
+      1a9      98
+      1aa      98
+      1ab      98
+      1ac      98
+      1ad      98
+      1b0      99
+      1b1      99
+      1b2      99
+      1b3      99
+      1b4      99
+      1b5      99
+      1b6      100
+      1b7      100
+      1b8      100
+      1b9      100
+      1ba      100
+      1bb      100
+      1c3      100
+      1c4      100
+      1c5      101
+      1c6      101
+      1c7      101
+      1c8      101
+      1c9      101
+      1ca      101
+      1cb      102
+      1cc      102
+      1cd      102
+      1ce      102
+      1cf      102
+      1d0      102
+      1d8      102
+      1d9      102
+      1da      103
+      1db      103
+      1dc      103
+      1dd      103
+      1de      103
+      1df      103
+      1e0      104
+      1e1      104
+      1e4      104
+      1e5      104
+      1e6      104
+      1e7      104
+      1e8      104
+      1e9      104
+      1ea      104
+      1ed      104
+      1ee      104
+      1ef      104
+      1f0      104
+      1f1      104
+      1f2      104
+      1f3      104
+      1f4      104
+      1f5      104
+      1f8      109
    }
 
    method 'fromText ([Ljava/lang/String;)LRecordPatterns$Shape;' {
-      0      76
-      1      76
+      0      114
+      1      114
+   }
+
+   method 'fromTextP ([Ljava/lang/String;)LRecordPatterns$Point3;' {
+      0      118
+      1      118
+   }
+
+   method 'fromTextS ([Ljava/lang/String;)LRecordPatterns$S;' {
+      0      122
+      1      122
    }
 }
 
 Lines mapping:
-17 <-> 11
-18 <-> 71
-19 <-> 26
-20 <-> 38
-21 <-> 47
-22 <-> 51
-23 <-> 55
-24 <-> 61
-25 <-> 64
-26 <-> 20
-28 <-> 72
-31 <-> 77
+19 <-> 14
+20 <-> 74
+21 <-> 29
+22 <-> 41
+23 <-> 50
+24 <-> 54
+25 <-> 58
+26 <-> 64
+27 <-> 67
+28 <-> 77
+31 <-> 75
+33 <-> 87
+34 <-> 83
+37 <-> 100
+38 <-> 94
+41 <-> 98
+43 <-> 99
+44 <-> 105
+46 <-> 110
+49 <-> 115
+53 <-> 119
+57 <-> 123
