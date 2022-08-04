@@ -629,6 +629,8 @@ public class SingleClassesTest extends SingleClassesTestBase {
     register(SCALA, "TestCaseClasses", "Option1", "Option1$", "Option2", "Option2$", "Option3", "Option3$", "EnumLike", "EnumLike$");
     register(SCALA, "TestObject", "TestObject$");
     register(SCALA, "TestCompanionObject", "TestCompanionObject$");
+
+    register(CLOJURE, "TestClojure");
   }
 
   private void registerEntireClassPath() {

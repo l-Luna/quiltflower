@@ -22,6 +22,7 @@ import org.opentest4j.AssertionFailedError;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -106,11 +107,12 @@ public abstract class SingleClassesTestBase {
 
   private static List<Path> collectClasses(Path classFile) {
     List<Path> files = new ArrayList<>();
-    files.add(classFile);
+    if (Files.exists(classFile))
+      files.add(classFile);
 
     Path parent = classFile.getParent();
     if (parent != null) {
-      final Pattern pattern = Pattern.compile(classFile.getFileName().toString().replace(".class", "") + "\\$.*\\.class");
+      final Pattern pattern = Pattern.compile(classFile.getFileName().toString().replace(".class", "") + "(\\$.*|__init)\\.class");
       try {
         Files.list(parent).filter(p -> pattern.matcher(p.getFileName().toString()).matches()).forEach(files::add);
       } catch (IOException e) {
@@ -182,10 +184,12 @@ public abstract class SingleClassesTestBase {
       fixture.setUp(options);
       ConsoleDecompiler decompiler = fixture.getDecompiler();
       Path classFile = getClassFile();
-      assertTrue(Files.isRegularFile(classFile), classFile + " should exist");
+      boolean foundAnySource = Files.isRegularFile(classFile);
       for (Path file : collectClasses(classFile)) {
         decompiler.addSource(file.toFile());
+        foundAnySource = true;
       }
+      assertTrue(foundAnySource, classFile + " or other sources should exist");
 
       for (String companionFile : others) {
         Path companionClassFile = SingleClassesTestBase.getClassFile(fixture, version, companionFile);
@@ -202,13 +206,13 @@ public abstract class SingleClassesTestBase {
       String testFileName = classFile.getFileName().toString();
       String testName = testFileName.substring(0, testFileName.length() - 6);
       Path decompiledFile = fixture.getTargetDir().resolve(testName + ".java");
-      assertTrue(Files.isRegularFile(decompiledFile));
 
-      String decompiledContent = getContent(decompiledFile);
+      String decompiledContent;
 
       if (version == Version.SCALA) {
         // scala likes to generate "unrelated" classfiles for the majority of its functionality
         // tack those onto the end of the decompiled files
+        decompiledContent = getContent(decompiledFile);
         for (String companionFile : others) {
           Path decompiledCompanion = fixture.getTargetDir().resolve(companionFile + ".java");
           // cut off any packages
@@ -217,13 +221,27 @@ public abstract class SingleClassesTestBase {
 
           decompiledContent += "\n\n" + "// Decompiled companion from " + companionFile + "\n" + getContent(decompiledCompanion);
         }
+      } else if(version == Version.CLOJURE) {
+        // I'm sorry
+        decompiledContent = "";
+
+        for (Path file : collectClasses(classFile)) {
+          String suffix = file.getFileName().toString().replace(".class", "");
+          Path decompiledSource = fixture.getTargetDir().resolve(suffix + ".java");
+          assertTrue(Files.isRegularFile(decompiledSource));
+
+          decompiledContent += "\n\n" + "// Decompiled from " + suffix + "\n" + getContent(decompiledSource);
+        }
+      } else {
+        assertTrue(Files.isRegularFile(decompiledFile), decompiledFile + " should exist");
+        decompiledContent = getContent(decompiledFile);
       }
 
       Path referenceFile = getReferenceFile();
       if (!Files.exists(referenceFile)) {
         try {
           Files.createDirectories(referenceFile.getParent());
-          Files.copy(decompiledFile, referenceFile);
+          Files.write(referenceFile, StandardCharsets.UTF_8.encode(decompiledContent).array());
         } catch (IOException e) {
           throw new UncheckedIOException(e);
         }
@@ -258,6 +276,7 @@ public abstract class SingleClassesTestBase {
       GROOVY("groovy", "Groovy"),
       KOTLIN("kt", "Kotlin"),
       SCALA("scala", "Scala"),
+      CLOJURE("clojure", "Clojure"),
       JASM("jasm", "Custom (jasm)"),
       ;
 

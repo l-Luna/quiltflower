@@ -1,0 +1,510 @@
+
+
+// Decompiled from TestClojure$fn__156
+package pkg;
+
+import clojure.lang.AFn;
+import clojure.lang.AFunction;
+import clojure.lang.IFn;
+import clojure.lang.RT;
+import clojure.lang.Symbol;
+import clojure.lang.Var;
+
+public final class TestClojure$fn__156 extends AFunction {
+   public static final Var const__0 = RT.var("clojure.core", "commute");
+   public static final Var const__1 = RT.var("clojure.core", "deref");
+   public static final Var const__2 = RT.var("clojure.core", "*loaded-libs*");
+   public static final Var const__3 = RT.var("clojure.core", "conj");
+   public static final AFn const__4 = (AFn)Symbol.intern(null, "pkg.TestClojure");
+
+   public static Object invokeStatic() {
+      return ((IFn)const__0.getRawRoot()).invoke(((IFn)const__1.getRawRoot()).invoke(const__2), const__3.getRawRoot(), const__4);
+   }
+
+   public Object invoke() {
+      return invokeStatic();// 1
+   }
+}
+
+class 'pkg/TestClojure$fn__156' {
+   method 'invokeStatic ()Ljava/lang/Object;' {
+      0      17
+      1      17
+      2      17
+      3      17
+      4      17
+      5      17
+      6      17
+      7      17
+      8      17
+      9      17
+      a      17
+      b      17
+      c      17
+      d      17
+      e      17
+      f      17
+      10      17
+      11      17
+      12      17
+      13      17
+      14      17
+      15      17
+      16      17
+      17      17
+      18      17
+      19      17
+      1a      17
+      1b      17
+      1c      17
+      1d      17
+      1e      17
+      1f      17
+      20      17
+      21      17
+      22      17
+      23      17
+      24      17
+      25      17
+      26      17
+      27      17
+      28      17
+   }
+
+   method 'invoke ()Ljava/lang/Object;' {
+      0      21
+      1      21
+      2      21
+      3      21
+   }
+}
+
+Lines mapping:
+1 <-> 22
+
+
+// Decompiled from TestClojure$hello
+package pkg;
+
+import clojure.lang.AFunction;
+import clojure.lang.IFn;
+import clojure.lang.RT;
+import clojure.lang.Var;
+
+public final class TestClojure$hello extends AFunction {
+   public static final Var const__0 = RT.var("clojure.core", "println");
+
+   public static Object invokeStatic() {
+      return ((IFn)const__0.getRawRoot()).invoke("Hello world!");// 6
+   }
+
+   public Object invoke() {
+      return invokeStatic();// 3
+   }
+}
+
+class 'pkg/TestClojure$hello' {
+   method 'invokeStatic ()Ljava/lang/Object;' {
+      0      11
+      1      11
+      2      11
+      3      11
+      4      11
+      5      11
+      6      11
+      7      11
+      8      11
+      9      11
+      a      11
+      b      11
+      c      11
+      d      11
+      e      11
+      f      11
+      10      11
+   }
+
+   method 'invoke ()Ljava/lang/Object;' {
+      0      15
+      1      15
+      2      15
+      3      15
+   }
+}
+
+Lines mapping:
+3 <-> 16
+6 <-> 12
+
+
+// Decompiled from TestClojure$loading__6789__auto____154
+package pkg;
+
+import clojure.lang.AFn;
+import clojure.lang.AFunction;
+import clojure.lang.Associative;
+import clojure.lang.Compiler;
+import clojure.lang.IFn;
+import clojure.lang.RT;
+import clojure.lang.Symbol;
+import clojure.lang.Var;
+
+public final class TestClojure$loading__6789__auto____154 extends AFunction {
+   public static final Var const__0 = RT.var("clojure.core", "refer");
+   public static final AFn const__1 = (AFn)Symbol.intern(null, "clojure.core");
+
+   public Object invoke() {
+      Var.pushThreadBindings((Associative)RT.mapUniqueKeys(new Object[]{Compiler.LOADER, this.getClass().getClassLoader()}));
+
+      Object var1;
+      try {
+         var1 = ((IFn)const__0.getRawRoot()).invoke(const__1);
+      } finally {
+         Var.popThreadBindings();
+      }
+
+      return var1;// 1
+   }
+}
+
+class 'pkg/TestClojure$loading__6789__auto____154' {
+   method 'invoke ()Ljava/lang/Object;' {
+      6      16
+      7      16
+      8      16
+      c      16
+      d      16
+      e      16
+      f      16
+      10      16
+      11      16
+      12      16
+      13      16
+      14      16
+      15      16
+      17      16
+      18      16
+      19      16
+      1a      16
+      1b      16
+      1c      16
+      1d      16
+      20      20
+      21      20
+      22      20
+      23      20
+      24      20
+      25      20
+      26      20
+      27      20
+      28      20
+      29      20
+      2a      20
+      2b      20
+      2c      20
+      2d      20
+      2e      20
+      2f      20
+      30      20
+      31      20
+      35      25
+      36      25
+      37      25
+      38      22
+      39      25
+      3a      25
+      3b      25
+      3c      25
+      3d      25
+      3e      25
+   }
+}
+
+Lines mapping:
+1 <-> 26
+
+
+// Decompiled from TestClojure__init
+package pkg;
+
+import clojure.lang.AFn;
+import clojure.lang.Compiler;
+import clojure.lang.IFn;
+import clojure.lang.IPersistentMap;
+import clojure.lang.LockingTransaction;
+import clojure.lang.PersistentList;
+import clojure.lang.RT;
+import clojure.lang.Symbol;
+import clojure.lang.Tuple;
+import clojure.lang.Var;
+import java.util.Arrays;
+import java.util.concurrent.Callable;
+
+public class TestClojure__init {
+   public static final Var const__0;
+   public static final AFn const__1;
+   public static final AFn const__2;
+   public static final Var const__3;
+   public static final AFn const__12;
+
+   public static void load() {
+      ((IFn)const__0.getRawRoot()).invoke(const__1);
+      ((IFn)(new TestClojure$loading__6789__auto____154())).invoke();
+      if (((Symbol)const__1).equals(const__2)) {
+         Object var10002 = null;
+      } else {
+         LockingTransaction.runInTransaction((Callable)(new TestClojure$fn__156()));// 1
+         Object var0 = null;
+      }
+
+      Var var10003 = const__3;
+      const__3.setMeta((IPersistentMap)const__12);
+      var10003.bindRoot(new TestClojure$hello());
+   }
+
+   public static void __init0() {
+      const__0 = RT.var("clojure.core", "in-ns");
+      const__1 = (AFn)Symbol.intern(null, "pkg.TestClojure");
+      const__2 = (AFn)Symbol.intern(null, "clojure.core");
+      const__3 = RT.var("pkg.TestClojure", "hello");
+      const__12 = (AFn)RT.map(
+         new Object[]{
+            RT.keyword(null, "arglists"),
+            PersistentList.create(Arrays.asList(Tuple.create())),
+            RT.keyword(null, "doc"),
+            "hello world method",
+            RT.keyword(null, "line"),
+            3,
+            RT.keyword(null, "column"),
+            1,
+            RT.keyword(null, "file"),
+            "pkg/TestClojure.clj"
+         }
+      );
+   }
+
+   // $QF: Could not inline inconsistent finally blocks
+   static {
+      __init0();
+      Compiler.pushNSandLoader(RT.classForName("pkg.TestClojure__init").getClassLoader());
+
+      try {
+         load();
+      } catch (Throwable var1) {
+         Var.popThreadBindings();
+         throw var1;
+      }
+
+      Var.popThreadBindings();
+   }
+}
+
+class 'pkg/TestClojure__init' {
+   method 'load ()V' {
+      0      23
+      1      23
+      2      23
+      3      23
+      4      23
+      5      23
+      6      23
+      7      23
+      8      23
+      9      23
+      a      23
+      b      23
+      c      23
+      d      23
+      e      23
+      f      23
+      10      23
+      18      24
+      19      24
+      1a      24
+      1b      24
+      1c      24
+      1d      24
+      1e      24
+      1f      24
+      20      25
+      21      25
+      22      25
+      23      25
+      24      25
+      25      25
+      26      25
+      27      25
+      28      25
+      29      25
+      2a      25
+      2b      25
+      2c      25
+      2f      26
+      3b      28
+      3c      28
+      3d      28
+      3e      28
+      3f      28
+      40      28
+      42      29
+      43      32
+      44      32
+      45      32
+      47      33
+      48      33
+      49      33
+      4a      33
+      4b      33
+      4c      33
+      4d      33
+      4e      33
+      4f      33
+      58      34
+      59      34
+      5a      34
+      5b      35
+   }
+
+   method '__init0 ()V' {
+      0      38
+      1      38
+      2      38
+      3      38
+      4      38
+      5      38
+      6      38
+      7      38
+      8      38
+      9      38
+      a      38
+      b      38
+      c      38
+      d      39
+      e      39
+      f      39
+      10      39
+      11      39
+      12      39
+      13      39
+      14      39
+      15      39
+      16      39
+      17      39
+      18      39
+      19      40
+      1a      40
+      1b      40
+      1c      40
+      1d      40
+      1e      40
+      1f      40
+      20      40
+      21      40
+      22      40
+      23      40
+      24      40
+      25      41
+      26      41
+      27      41
+      28      41
+      29      41
+      2a      41
+      2b      41
+      2c      41
+      2d      41
+      2e      41
+      2f      41
+      30      41
+      31      41
+      39      44
+      3a      44
+      3b      44
+      3c      44
+      3d      44
+      3e      44
+      48      45
+      49      45
+      4a      45
+      4c      45
+      4d      45
+      4e      45
+      4f      45
+      50      45
+      51      45
+      55      46
+      56      46
+      57      46
+      58      46
+      59      46
+      5a      46
+      5e      47
+      5f      47
+      63      48
+      64      48
+      65      48
+      66      48
+      67      48
+      68      48
+      6c      49
+      6d      49
+      6e      49
+      6f      49
+      74      50
+      75      50
+      76      50
+      77      50
+      78      50
+      79      50
+      7e      51
+      7f      51
+      80      51
+      81      51
+      86      52
+      87      52
+      88      52
+      89      52
+      8a      52
+      8b      52
+      90      53
+      91      53
+      93      42
+      94      42
+      95      42
+      96      42
+      97      42
+      98      42
+      99      42
+      9a      42
+      9b      42
+      9c      56
+   }
+
+   method '<clinit> ()V' {
+      0      60
+      1      60
+      2      60
+      3      61
+      4      61
+      5      61
+      6      61
+      7      61
+      8      61
+      9      61
+      a      61
+      b      61
+      e      64
+      11      70
+      12      70
+      13      70
+      14      71
+      15      71
+      16      71
+      17      66
+      18      66
+      19      66
+      1a      67
+   }
+}
+
+Lines mapping:
+1 <-> 29
